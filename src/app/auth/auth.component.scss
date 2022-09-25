@@ -1,0 +1,29 @@
+.left-item-nav li a {
+    color: var(--white) !important;
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.left-item-nav li a:hover {
+    color: var(--black) !important;
+    width: fit-content;
+    border-bottom: 4px solid var(--black);
+}
+
+.right-item-nav {
+    li a {
+        color: var(--white) !important;
+        font-size: 1em;
+        font-weight: 500;
+    }
+
+    li:first-child a:hover {
+        color: var(--black) !important;
+        width: fit-content;
+        border-bottom: 4px solid var(--black);
+    }
+
+    li:last-child a:hover {
+        border-bottom: 4px solid var(--white);
+    }
+}
