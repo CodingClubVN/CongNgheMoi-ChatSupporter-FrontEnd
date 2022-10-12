@@ -9,7 +9,11 @@ const routes: Routes = [
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+    loadChildren: () => import('./module/auth/auth.module').then(m => m.AuthModule)
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./module/home-chat/home-chat.module').then(m => m.HomeChatModule)
   }
 ];
 
