@@ -1,11 +1,14 @@
+import { TokenStorageService } from './share/services/token-storage/token-storage.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { HttpClientModule } from '@angular/common/http';
-import {LocalStorageService, NgxWebstorageModule} from 'ngx-webstorage';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {LocalStorageService, NgxWebstorageModule, StrategyCacheService, StrategyIndex} from 'ngx-webstorage';
+import { CookieService } from 'ngx-cookie-service';
+
 
 @NgModule({
   declarations: [
@@ -16,9 +19,14 @@ import {LocalStorageService, NgxWebstorageModule} from 'ngx-webstorage';
     AppRoutingModule,
     FontAwesomeModule,
     HttpClientModule,
-    NgxWebstorageModule
+    NgxWebstorageModule.forRoot({ prefix: 'custom', separator: '.', caseSensitive:true })
   ],
-  providers: [LocalStorageService],
+  providers: [
+    LocalStorageService, 
+    StrategyIndex,
+    StrategyCacheService,
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

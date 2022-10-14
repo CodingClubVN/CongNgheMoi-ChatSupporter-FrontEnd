@@ -1,8 +1,10 @@
+import { TokenStorageService } from './../../../share/services/token-storage/token-storage.service';
 import { TokenModel } from './../../../share/models/token.model';
 import { AccountModel } from './../../../share/models/account.model';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/share/services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +13,9 @@ import { AuthService } from 'src/app/share/services/auth/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm = this.initFormLogin();
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              private tokenStorageService: TokenStorageService,
+              private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -25,8 +29,13 @@ export class LoginComponent implements OnInit {
     const account = new AccountModel();
     account.username = this.loginForm.getRawValue().username;
     account.password = this.loginForm.getRawValue().password;
+    console.log(account);
     this.authService.login(account).subscribe((data: TokenModel) => {
+      this.tokenStorageService.saveToken(data.token);
       this.loginForm.reset();
+      const token = this.tokenStorageService.getToken();
+      if (token) {
+      }
     }, 
     error => {
       console.log(error);

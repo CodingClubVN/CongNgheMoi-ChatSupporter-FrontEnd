@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, CanActivate } from '@angular/router';
+import { AuthGuard } from './share/services/guard/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'auth',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -13,7 +14,8 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./module/home-chat/home-chat.module').then(m => m.HomeChatModule)
+    loadChildren: () => import('./module/home-chat/home-chat.module').then(m => m.HomeChatModule),
+    canActivate: [AuthGuard]
   }
 ];
 
