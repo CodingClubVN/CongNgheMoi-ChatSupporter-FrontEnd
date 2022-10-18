@@ -4,6 +4,8 @@ import {LocalStorageService} from 'ngx-webstorage';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {CookieService} from 'ngx-cookie-service';
+import {environment} from '../../../../environments/environment.prod';
+import { toInteger } from 'lodash';
 
 
 const key = apiPath.cookie;
@@ -15,7 +17,13 @@ export class TokenStorageService{
   constructor(private cookieService: CookieService) { }
 
   public saveToken(token: string): void {
-    this.cookieService.set(key.ID_KEY, token);
+    const future = toInteger(Date.now()) + 5 * 60000;
+    console.log(future);
+    this.cookieService.set(key.ID_KEY, token,{ 
+      expires: future, 
+      path: '/', 
+      sameSite: 'Strict' 
+   });
   }
   public getToken(): any {
     return this.cookieService.get(key.ID_KEY);

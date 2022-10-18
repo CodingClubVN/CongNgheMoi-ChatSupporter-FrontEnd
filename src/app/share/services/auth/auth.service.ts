@@ -1,3 +1,4 @@
+import { TokenStorageService } from './../token-storage/token-storage.service';
 import { AccountModel } from './../../models/account.model';
 import { UserModel } from './../../models/user.model';
 import { Injectable } from '@angular/core';
@@ -17,7 +18,8 @@ const path = apiPath.auth;
 })
 export class AuthService {
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService,
+              private tokenStorageService: TokenStorageService) { }
 
   login(account: AccountModel): Observable<TokenModel> {
     const url = `${apiUrl}/${path.login}`;
@@ -39,5 +41,9 @@ export class AuthService {
           return body;
         })
       );
+  }
+
+  checkLogin(): boolean {
+    return this.tokenStorageService.getToken() ? true : false;
   }
 }

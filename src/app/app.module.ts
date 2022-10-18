@@ -22,9 +22,7 @@ import { CookieService } from 'ngx-cookie-service';
     NgxWebstorageModule.forRoot({ prefix: 'custom', separator: '.', caseSensitive:true })
   ],
   providers: [
-    LocalStorageService, 
-    StrategyIndex,
-    StrategyCacheService,
+    TokenStorageService, 
     CookieService
   ],
   bootstrap: [AppComponent]

@@ -18,6 +18,8 @@ export class LoginComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
+    const token = this.tokenStorageService.getToken();
+    console.log(token);
   }
   initFormLogin(): FormGroup {
     return new FormGroup({
@@ -35,6 +37,7 @@ export class LoginComponent implements OnInit {
       this.loginForm.reset();
       const token = this.tokenStorageService.getToken();
       if (token) {
+        this.router.navigate(['/home/chat']);
       }
     }, 
     error => {
