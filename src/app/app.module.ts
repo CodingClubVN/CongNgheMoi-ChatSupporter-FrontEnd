@@ -1,3 +1,4 @@
+import { UiModule } from './share/ui/ui.module';
 import { TokenStorageService } from './share/services/token-storage/token-storage.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,7 +20,8 @@ import { CookieService } from 'ngx-cookie-service';
     AppRoutingModule,
     FontAwesomeModule,
     HttpClientModule,
-    NgxWebstorageModule.forRoot({ prefix: 'custom', separator: '.', caseSensitive:true })
+    NgxWebstorageModule.forRoot({ prefix: 'custom', separator: '.', caseSensitive:true }),
+    UiModule
   ],
   providers: [
     TokenStorageService, 

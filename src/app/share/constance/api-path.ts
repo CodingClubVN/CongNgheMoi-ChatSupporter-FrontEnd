@@ -1,13 +1,4 @@
 export const apiPath = {
-  product: {
-    product: 'api/products',
-    productById: 'api/products/detail',
-    productByCategory: 'api/products/category',
-    productByType: 'api/products/product_type',
-    category: 'api/categories',
-    productType: 'api/product-type',
-    productDetail: 'api/product-detail'
-  },
   cookie: {
     ID_KEY:'auth-token',
     USERNAME_KEY: 'username',
@@ -23,5 +14,12 @@ export const apiPath = {
   },
   order: {
     order: 'api/orders',
+  },
+  conversation: {
+    conversation: 'api/conversations'
+  },
+  user: {
+    me: 'api/users/me',
+    user: 'api/users'
   }
 }
