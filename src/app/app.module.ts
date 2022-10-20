@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-import { UserState } from './share/state/user.state';
-=======
->>>>>>> 241921698f9737d19e9a35fa5b157d2a086b50bb
 import { UiModule } from './share/ui/ui.module';
 import { TokenStorageService } from './share/services/token-storage/token-storage.service';
 import { NgModule } from '@angular/core';
@@ -26,17 +22,13 @@ import { ModalModule } from 'ngb-modal';
     FontAwesomeModule,
     HttpClientModule,
     NgxWebstorageModule.forRoot({ prefix: 'custom', separator: '.', caseSensitive:true }),
-<<<<<<< HEAD
     UiModule,
     ModalModule
-=======
-    UiModule
->>>>>>> 241921698f9737d19e9a35fa5b157d2a086b50bb
   ],
   providers: [
     TokenStorageService, 
     CookieService,
-    UserState
+    
   ],
   bootstrap: [AppComponent]
 })
