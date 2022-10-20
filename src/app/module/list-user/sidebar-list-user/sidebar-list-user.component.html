@@ -1,0 +1,19 @@
+<div class="px-4">
+    <div class="">
+        <h4 class="fw-bolder pt-3">List friend</h4>
+    </div>
+    <div class="search-outer mt-4 d-flex">
+        <input type="text" class="form-control py-2" placeholder="Search">
+        <i class="far fa-search"></i>
+    </div>
+    <div class="mt-4">
+        <p class="text-secondary">All friends</p>
+    </div>
+    <div>
+        <ul class="p-0">
+            <li *ngFor="let user of listFriends" class="bg-light p-3 my-2 list-unstyled" (click)="selectFriend(user)">
+                {{user.fullname}}
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthService } from './../../../share/services/auth/auth.service';
 import { AccountModel } from './../../../share/models/account.model';
 import { Component, OnInit } from '@angular/core';
@@ -11,7 +12,8 @@ import { UserModel } from 'src/app/share/models/user.model';
 })
 export class RegisterComponent implements OnInit {
   formRegister = this.initFormRegister();
-  constructor(private authServive: AuthService) { }
+  constructor(private authServive: AuthService,
+              private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -26,8 +28,8 @@ export class RegisterComponent implements OnInit {
       phone: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
     });
   }
-  register(event: any){
-    console.log(this.formRegister.getRawValue());
+
+  register(event: any) {
     this.formRegister
     const account = new AccountModel();
     account.username = this.formRegister.getRawValue().username;
@@ -38,7 +40,8 @@ export class RegisterComponent implements OnInit {
     user.phone = this.formRegister.getRawValue().phone;
     user.account = account;
     this.authServive.register(user).subscribe((data: any) => {
-      console.log(data);
+      this.formRegister.reset();
+      this.router.navigate(['/auth/login']);
     });
     console.log(user);
   }

@@ -1,3 +1,4 @@
+import { UserService } from './../../../share/services/user/user.service';
 import { TokenStorageService } from './../../../share/services/token-storage/token-storage.service';
 import { TokenModel } from './../../../share/models/token.model';
 import { AccountModel } from './../../../share/models/account.model';
@@ -15,11 +16,10 @@ export class LoginComponent implements OnInit {
   loginForm = this.initFormLogin();
   constructor(private authService: AuthService,
               private tokenStorageService: TokenStorageService,
-              private router: Router) { }
+              private router: Router,
+              private userSerivce: UserService) { }
 
   ngOnInit(): void {
-    const token = this.tokenStorageService.getToken();
-    console.log(token);
   }
   initFormLogin(): FormGroup {
     return new FormGroup({
@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
     const account = new AccountModel();
     account.username = this.loginForm.getRawValue().username;
     account.password = this.loginForm.getRawValue().password;
-    console.log(account);
     this.authService.login(account).subscribe((data: TokenModel) => {
       this.tokenStorageService.saveToken(data.token);
       this.loginForm.reset();
@@ -39,6 +38,9 @@ export class LoginComponent implements OnInit {
       if (token) {
         this.router.navigate(['/home/chat']);
       }
+      this.userSerivce.getMe().subscribe(me => {
+        this.tokenStorageService.addUser(me);
+      });
     }, 
     error => {
       console.log(error);

@@ -28,6 +28,17 @@ export class TokenStorageService{
   public getToken(): any {
     return this.cookieService.get(key.ID_KEY);
   }
+  public addUser(user: any): void{
+    const future = toInteger(Date.now()) + 5 * 60000;
+    this.cookieService.set(key.USER, JSON.stringify(user), { 
+      expires: future, 
+      path: '/', 
+      sameSite: 'Strict' 
+   });
+  }
+  public getUser(): any{
+    return JSON.parse(this.cookieService.get(key.USER));
+  }
   // public saveRefreshToken(token: string): void {
   //   this.cookieService?.clear(key.Refresh_Token);
   //   this.cookieService?.store(key.Refresh_Token, token);
@@ -49,12 +60,6 @@ export class TokenStorageService{
   // }
   // public getCartItem(): any{
   //   return this.cookieService.retrieve(key.CART) ? JSON.parse(this.cookieService.retrieve(key.CART)) : [];
-  // }
-  // public addUser(user: any): void{
-  //   this.cookieService.store(key.USER, JSON.stringify(user));
-  // }
-  // public getUser(): any{
-  //   return this.cookieService.retrieve(key.USER) ? JSON.parse(this.cookieService.retrieve(key.USER)) : [];
   // }
   // public clearOrder(): any{
   //   this.cookieService.clear(key.USER);

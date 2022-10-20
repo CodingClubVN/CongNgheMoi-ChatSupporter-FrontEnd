@@ -1,7 +1,8 @@
 import { AccountModel }  from './account.model';
 
 export class UserModel {
-    id!: string;
+    _id!: string;
+    userId!: string;
     fullname!: string;
     address!: string;
     email!: string;
