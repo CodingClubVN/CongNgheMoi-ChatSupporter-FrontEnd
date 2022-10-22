@@ -20,6 +20,9 @@ export const apiPath = {
   },
   user: {
     me: 'api/users/me',
-    user: 'api/users'
+    user: 'api/users',
+  },
+  message: {
+    message: 'api/messages/conversation'
   }
 }

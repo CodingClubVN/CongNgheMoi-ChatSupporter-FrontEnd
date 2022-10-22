@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   }
   initFormLogin(): FormGroup {
     return new FormGroup({
-      username: new FormControl('thaihoc123', [Validators.required, Validators.minLength(6)]),
+      username: new FormControl('thaihoc1', [Validators.required, Validators.minLength(6)]),
       password: new FormControl('123123123', [Validators.required, Validators.minLength(6)])
     });
   }

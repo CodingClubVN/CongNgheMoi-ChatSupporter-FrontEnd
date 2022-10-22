@@ -1,6 +1,7 @@
-.card-chat-avatar{
+.card-chat-avatar {
     position: relative;
-    & .online-status{
+
+    & .online-status {
         position: absolute;
         bottom: 0;
         right: 0;
@@ -10,56 +11,77 @@
         background-color: #00C851;
     }
 }
-.content-chat-name{
+
+.content-chat-name {
     font-size: 1.2em;
     font-weight: 700;
     color: #000;
 }
 
-.header-content-chat{
+.header-content-chat {
     height: 10vh;
 }
 
-.body-content-chat{
+.body-content-chat {
     height: 80vh;
     background-color: #EFF4FB;
+    overflow-y: auto;
 }
 
-.status-text{
+.status-text {
     font-size: 0.9em;
 }
-.header-group-icon-right{
+
+.header-group-icon-right {
     font-size: 1.4em;
-    & a{
+
+    & a {
         height: 65px;
         width: 65px;
         padding: 10px;
         margin-right: 10px;
     }
-    & a:hover{
-        background: linear-gradient(to bottom right, var(--gradient-start) 30%,var(--gradient-end) 100%) !important;
+
+    & a:hover {
+        background: linear-gradient(to bottom right, var(--gradient-start) 30%, var(--gradient-end) 100%) !important;
         border-radius: 15px;
     }
-    & a:last-child :hover{
+
+    & a:last-child :hover {
         background: none;
     }
 }
-.input-content-chat{
+
+.input-content-chat {
     height: 10vh;
 }
-.group-input-chat{
+
+.group-input-chat {
     background-color: #EAF3FF;
     border-radius: 10px;
-    & button{
+
+    & button {
         background: transparent;
         border: none;
     }
-    & input{
+
+    & input {
         border: none;
         background-color: #EAF3FF;
     }
-    & input:focus{
+
+    & input:focus {
         box-shadow: none;
         border: none !important;
     }
+}
+.message-item-curent-user {
+    background: linear-gradient(to bottom right, var(--gradient-start) 30%, var(--gradient-end) 100%) !important;
+    width: fit-content;
+    max-width: 60%;
+}
+.message-item-friend {
+    background: var(--gray-200) !important;
+    width: fit-content;
+    max-width: 60%;
 }

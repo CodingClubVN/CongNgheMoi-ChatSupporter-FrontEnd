@@ -17,8 +17,8 @@
     <div class="mt-4">
         <p class="text-secondary">All chats</p>
     </div>
-    <div>
-        <div *ngFor="let conversation of listConversations">
+    <div class="list-conversation">
+        <div *ngFor="let conversation of listConversations" class="conversation" (click)="selectConversation(conversation)">
             <div *ngFor="let user of conversation.users">
                 <div class="card-chat p-3 mb-3">
                     <div class="d-flex">
@@ -30,13 +30,13 @@
                         <div class="card-chat-body ms-3 mt-1 flex-grow-1">
                             <div class="my-auto">
                                 <div class="d-flex justify-content-between">
-                                    <p class="title-card fw-bold m-0 pb-1 text-one-line flex-grow-1 me-4">
-                                        {{conversation.conversationName}}
+                                    <p class="title-card fw-bold m-0 pb-1 text-one-line flex-grow-1 me-2">
+                                        {{conversation?.conversationName}}
                                     </p>
-                                    <p class="m-0 text-secondary">{{conversation.updatedAt | date: 'shortTime'}}</p>
+                                    <p class="m-0 text-secondary">{{conversation?.updatedAt | date: 'shortTime'}}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <p class="content-text-card m-0 text-secondary">Hello, good afternoon!</p>
+                                    <p class="content-text-card m-0 text-secondary">{{conversation?.lastMessage?.content}}</p>
                                     <div
                                         class="message-unsend-number backgroup-linear-gradient rounded-circle text-center">
                                         <p>9</p>

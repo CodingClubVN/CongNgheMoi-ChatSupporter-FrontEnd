@@ -12,6 +12,9 @@ export class ConversationState implements OnDestroy {
     private listConversationSubject = new BehaviorSubject<ConversationModel[]>([]);
     public $conversations = this.listConversationSubject.asObservable();
 
+    private conversationSubject = new BehaviorSubject<ConversationModel | null>(null);
+    public $conversation = this.conversationSubject.asObservable();
+
     subscription: Subscription = new Subscription();
 
     constructor() { }
@@ -21,6 +24,14 @@ export class ConversationState implements OnDestroy {
 
     public setStateUser(conversationModel: ConversationModel[]): void {
         this.listConversationSubject.next(conversationModel);
+    }
+
+    public setConversation(conversationModel: ConversationModel): void {
+        this.conversationSubject.next(conversationModel);
+    }
+
+    public getStateConversation(): ConversationModel | null{
+        return this.conversationSubject.getValue();
     }
 
     public getStateUser(): ConversationModel[] {

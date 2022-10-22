@@ -36,15 +36,17 @@
             </li>
             <li class="icon-group-item mx-auto align-items-center mt-2">
                 <a class="my-auto">
-                    <i class="fal fa-user-plus"></i>
+                    <i class="fal fa-user-plus" ></i>
                 </a>
             </li>
         </ul>
     </div>
     <div class="avatar-outer text-center mb-4">
-        <a href="#">
-            <img class="w-50 rounded-circle backgroup-linear-gradient" src="../../../../assets/images/user-astronaut-solid.svg" alt="" width="100">
-        </a>
+        <div class="w-100 d-flex justify-content-center">
+            <button (click)="signout($event)" class="btn btn-danger">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+        </div>
     </div>
 </div>
 

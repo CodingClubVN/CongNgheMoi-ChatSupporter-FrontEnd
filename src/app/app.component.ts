@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SocketIoService } from './share/services/socketio/socket-io.service';
 
 @Component({
   selector: 'app-root',

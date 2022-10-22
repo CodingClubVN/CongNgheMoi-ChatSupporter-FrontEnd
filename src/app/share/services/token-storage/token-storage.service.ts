@@ -46,9 +46,9 @@ export class TokenStorageService{
   // public getRefreshToken(): any {
   //   return this.cookieService.retrieve(key.Refresh_Token);
   // }
-  // public signOut(): void {
-  //   this.cookieService.clear();
-  // }
+  public signOut(): void {
+    this.cookieService.delete(key.ID_KEY, '/' );
+  }
   // public saveUsername(username: string): void {
   //   this.cookieService.store(key.USERNAME_KEY, username);
   // }
