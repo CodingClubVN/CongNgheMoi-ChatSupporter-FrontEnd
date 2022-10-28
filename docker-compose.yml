@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  angular-nginx-docker:
+      container_name: fe_cmn_prod
+      image: fe_cmn_prod:1.0.0
+      build: .
+      environment:
+          NODE_ENV: production
+      ports:
+          - 80:80
