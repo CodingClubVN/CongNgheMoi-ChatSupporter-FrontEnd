@@ -68,11 +68,11 @@ export class ContentChatComponent implements OnInit, AfterViewChecked {
   sendMessage(event: any): void {
     const fd: FormData  = new FormData();
     let typeMesage = 'text';
-    if (this.file.type.includes('image')) {
+    if (this.file?.type.includes('image')) {
       typeMesage = 'image';
-    } else if (this.file.type.includes('video')) {
+    } else if (this.file?.type.includes('video')) {
       typeMesage = 'video';
-    } else {
+    } else if (this.file?.type.includes('application')) {
       typeMesage = 'file';
     }
     fd.append('file',this.file);

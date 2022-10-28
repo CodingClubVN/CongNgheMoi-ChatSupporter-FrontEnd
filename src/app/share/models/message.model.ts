@@ -1,3 +1,4 @@
+import { UserModel } from './user.model';
 export class MessageModel {
     messageId!: string;
     conversationId!: string;
@@ -6,4 +7,5 @@ export class MessageModel {
     type!: string;
     fromUserId!: string;
     description!: string;
+    user!: UserModel;
 }

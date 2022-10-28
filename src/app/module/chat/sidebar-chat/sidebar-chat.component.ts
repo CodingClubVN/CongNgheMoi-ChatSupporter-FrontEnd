@@ -1,3 +1,4 @@
+import { UserState } from './../../../share/state/user.state';
 import { SocketIoService } from './../../../share/services/socketio/socket-io.service';
 import { ConversationState } from './../../../share/state/conversation.state';
 import { ConversationCreateModel } from './../../../share/models/conversation.model';
@@ -24,7 +25,8 @@ export class SidebarChatComponent implements OnInit, OnChanges, AfterViewChecked
   constructor(private modalService: NgbModal,
     private conversationService: ConversationService,
     private conversationState: ConversationState,
-    private socketIoService: SocketIoService) { }
+    private socketIoService: SocketIoService,
+    private userState: UserState) { }
   ngAfterViewChecked(): void {
     this.scrollToBottom();
   }
@@ -41,6 +43,7 @@ export class SidebarChatComponent implements OnInit, OnChanges, AfterViewChecked
         }
       }
     });
+    this.userState.$user.subscribe(res => console.log(res));
   }
 
   ngOnInit(): void {
