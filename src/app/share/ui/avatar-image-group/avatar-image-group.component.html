@@ -8,7 +8,7 @@
 </div>
 <div *ngIf="listUser && listUser?.length === 2">
     <div class="p-0" *ngFor="let user of listUser">
-        <div *ngIf="user._id !== me._id" class="p-0">
+        <div *ngIf="user?._id !== me?._id" class="p-0">
             <img class="border border-1 rounded-circle"
             src="{{user?.avatarUrl}}" alt="" width="50" height="50">
         </div>
