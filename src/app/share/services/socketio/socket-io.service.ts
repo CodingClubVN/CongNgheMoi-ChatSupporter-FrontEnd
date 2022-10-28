@@ -30,7 +30,6 @@ export class SocketIoService {
               }
 
   setupSocketConnection() {
-    console.log(this.currentUser._id);
     this.socket = io(environment.apiUrl, {transports: ['websocket', 'polling', 'flashsocket'], query: {userId: this.currentUser._id}});
   }
 

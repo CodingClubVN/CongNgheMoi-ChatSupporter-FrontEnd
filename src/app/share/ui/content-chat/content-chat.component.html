@@ -1,63 +1,67 @@
 <div class="bg-content-chat w-100 h-100">
-    <div class="header-content-chat d-flex justify-content-between mx-4">
-        <div class="d-flex my-auto">
-            <div class="card-chat-avatar">
-                <img class="border border-1 rounded-circle d-block"
-                    src="../../../../assets/images/landing-page-login.png" alt="" width="60" height="60">
-                <!-- <div class="online-status"></div> -->
+    <div class="d-flex">
+        <div class="" [ngClass]="!isColapse ? 'col-9' : 'col-12'">
+            <div class="header-content-chat d-flex justify-content-between mx-4">
+                <div class="d-flex my-auto">
+                    <div class="card-chat-avatar">
+                        <app-avatar-image-group [listUser]="conversatinSelect?.users"></app-avatar-image-group>
+                    </div>
+                    <div class="ms-4">
+                        <h6 class="content-chat-name fw-bolder m-0 mt-3">{{conversatinSelect?.conversationName}}</h6>
+                        <span class="status-text text-secondary">Online</span>
+                    </div>
+                </div>
+                <div class="header-group-icon-right flex-row align-items-center justify-content-center my-auto">
+                    <a class="">
+                        <i class="fal fa-phone-alt"></i>
+                    </a>
+                    <a class="">
+                        <i class="fal fa-video"></i>
+                    </a>
+                    <a class="" (click)="isColapse = !isColapse">
+                        <i class="fal fa-ellipsis-v"></i>
+                    </a>
+                </div>
             </div>
-            <div class="ms-3">
-                <h6 class="content-chat-name fw-bolder m-0 mt-2">{{conversatinSelect?.conversationName}}</h6>
-                <span class="status-text text-secondary">Online</span>
+            <div #scrollChat class="body-content-chat px-4 pt-2">
+                <div *ngFor="let message of listMessage">
+                    <div class="w-100 d-flex justify-content-end mt-3" *ngIf="curentUser._id === message.fromUserId">
+                        <div class="message-item-curent-user px-4 py-2">
+                            {{message.content}}
+                        </div>
+                    </div>
+                    <div *ngIf="curentUser._id !== message.fromUserId" class="mt-3">
+                        <div class="message-item-friend  px-4 py-2">
+                            {{message.content}}
+                        </div>
+                    </div>
+                </div>
             </div>
+            <form [formGroup]="chatForm">
+                <div class="input-content-chat">
+                    <div class="h-100 d-flex my-auto align-items-center justify-content-center px-5 ">
+                        <div class="group-input-chat d-flex w-100 my-auto p-2 mx-3">
+                            <button class="btn btn-light btn-sm btn-icon btn-icon-only btn-rounded">
+                                <i class="fa-regular fa-paperclip"></i>
+                            </button>
+                            <input type="text" class="form-control" formControlName="contentChat"
+                                placeholder="Write a message..." (keyup.enter)="sendMessage($event)">
+                            <button class="btn btn-light btn-sm btn-icon btn-icon-only btn-rounded">
+                                <i class="fa-regular fa-face-smile"></i>
+                            </button>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary py-2 backgroup-linear-gradient border-0"
+                                (click)="sendMessage($event)">
+                                <i class="fa-regular fa-paper-plane-top"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="header-group-icon-right flex-row align-items-center justify-content-center my-auto">
-            <a class="">
-                <i class="fal fa-phone-alt"></i>
-            </a>
-            <a class="">
-                <i class="fal fa-video"></i>
-            </a>
-            <a class="">
-                <i class="fal fa-ellipsis-v"></i>
-            </a>
+        <div class="option-chat col-3" *ngIf="!isColapse">
+            <app-option-chat [conversatinSelect]="conversatinSelect" [listFriend]="listFriend"></app-option-chat>
         </div>
     </div>
-    <div class="body-content-chat px-4 pt-2">
-        <div *ngFor="let message of listMessage">
-            <div class="w-100 d-flex justify-content-end mt-3" *ngIf="curentUser._id === message.fromUserId">
-                <div class="message-item-curent-user px-4 py-2 rounded-3">
-                    {{message.content}}
-                </div>
-            </div>
-            <div *ngIf="curentUser._id !== message.fromUserId" class="mt-3">
-                <div class="message-item-friend  px-4 py-2 rounded-3">
-                    {{message.content}}
-                </div>
-            </div>
-        </div>
-    </div>
-    <form [formGroup]="chatForm">
-        <div class="input-content-chat">
-            <div class="h-100 d-flex my-auto align-items-center justify-content-center px-5 ">
-                <div class="group-input-chat d-flex w-100 my-auto p-2 mx-3">
-                    <button class="btn btn-light btn-sm btn-icon btn-icon-only btn-rounded">
-                        <i class="fa-regular fa-paperclip"></i>
-                    </button>
-                    <input type="text" class="form-control" formControlName="contentChat"
-                        placeholder="Write a message..." (keyup.enter)="sendMessage($event)">
-                    <button class="btn btn-light btn-sm btn-icon btn-icon-only btn-rounded">
-                        <i class="fa-regular fa-face-smile"></i>
-                    </button>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary py-2 backgroup-linear-gradient border-0"
-                        (click)="sendMessage($event)">
-                        <i class="fa-regular fa-paper-plane-top"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </form>
-
 </div>

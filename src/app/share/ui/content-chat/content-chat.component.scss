@@ -79,9 +79,11 @@
     background: linear-gradient(to bottom right, var(--gradient-start) 30%, var(--gradient-end) 100%) !important;
     width: fit-content;
     max-width: 60%;
+    border-radius: 25px 25px 10px 25px;
 }
 .message-item-friend {
     background: var(--gray-200) !important;
     width: fit-content;
     max-width: 60%;
+    border-radius: 25px 25px 25px 10px;
 }

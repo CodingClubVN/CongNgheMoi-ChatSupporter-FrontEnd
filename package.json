@@ -24,6 +24,7 @@
     "@ng-bootstrap/ng-bootstrap": "^13.1.0",
     "@popperjs/core": "^2.11.6",
     "class-transformer": "^0.5.1",
+    "jquery": "^3.6.1",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "ngb-modal": "^2.0.3",

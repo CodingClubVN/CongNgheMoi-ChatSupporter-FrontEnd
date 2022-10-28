@@ -1,4 +1,4 @@
-import { ConversationCreateModel } from './../../models/conversation.model';
+import { ConversationCreateModel } from './../../../models/conversation.model';
 import { ConversationModel } from 'src/app/share/models/conversation.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserModel } from 'src/app/share/models/user.model';
@@ -29,7 +29,6 @@ export class AddMemberModalComponent implements OnInit {
   }
 
   getValueCheckbox(event: any) {
-    console.log('getValueCheckbox', event.target.value);
     if(event.target.checked) {
       this.listUserIdSelected.push(event.target.value);
     } else {
@@ -39,7 +38,8 @@ export class AddMemberModalComponent implements OnInit {
 
   onSubmit(event: any) {
     const conversation = new ConversationCreateModel()
-    conversation.conversationName = this.formConversation.value.conversationName;
+    this.listUserIdSelected
+    conversation.conversationName = this.formConversation.value.conversationName ? this.formConversation.value.conversationName : 'Group no name';
     conversation.arrayUserId = this.listUserIdSelected;
     this.modal.close(conversation);
   }

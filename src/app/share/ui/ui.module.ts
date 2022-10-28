@@ -4,7 +4,10 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { AddMemberModalComponent } from './add-member-modal/add-member-modal.component';
+import { AddMemberModalComponent } from './modal/add-member-modal/add-member-modal.component';
+import { AvatarImageGroupComponent } from './avatar-image-group/avatar-image-group.component';
+import { OptionChatComponent } from './option-chat/option-chat.component';
+import { ProfileModalComponent } from './modal/profile-modal/profile-modal.component';
 
 
 
@@ -12,7 +15,10 @@ import { AddMemberModalComponent } from './add-member-modal/add-member-modal.com
   declarations: [
     SidebarComponent,
     ContentChatComponent,
-    AddMemberModalComponent
+    AddMemberModalComponent,
+    AvatarImageGroupComponent,
+    OptionChatComponent,
+    ProfileModalComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +27,8 @@ import { AddMemberModalComponent } from './add-member-modal/add-member-modal.com
   ],
   exports: [
     SidebarComponent,
-    ContentChatComponent
+    ContentChatComponent,
+    AvatarImageGroupComponent
   ]
 })
 export class UiModule { }

@@ -26,24 +26,20 @@ export class ChatComponent implements OnInit {
   }
 
   listenService() {
+    let listUser: UserModel[] = [];
     this.currentUser = this.tokenStorageService.getUser();
     this.conversationService.getALLConversations().subscribe(conversation => {
-      this.listConversations = conversation
-      this.listConversations.map(conversation => {
-        conversation.users.filter(filterUser => filterUser.userId !== this.currentUser._id).map(usermap => {
-          const listUser = [];
-          listUser.push(usermap);
-          conversation.users = listUser;
-        })
+      this.listConversations = conversation;
+      this.listConversations.sort((a, b) => {
+        return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
       });
     });
     this.userService.getAllUser().subscribe(users => {
       this.listFriend = users;
     });
   }
-  getConversation(event: any): void {
+  createConversation(event: any): void {
     this.conversationService.createConversation(event).subscribe((conversation: ConversationModel) => {
-      console.log('conversation', conversation);
       this.listenService()
     })
   }

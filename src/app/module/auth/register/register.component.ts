@@ -43,6 +43,5 @@ export class RegisterComponent implements OnInit {
       this.formRegister.reset();
       this.router.navigate(['/auth/login']);
     });
-    console.log(user);
   }
 }

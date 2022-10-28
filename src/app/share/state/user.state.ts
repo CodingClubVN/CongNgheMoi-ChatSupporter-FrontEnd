@@ -18,7 +18,6 @@ export class UserState implements OnDestroy {
     }
 
     public setStateUser(user: UserModel): void {
-        console.log('user', user);
         this.userSubject.next(user);
     }
 
