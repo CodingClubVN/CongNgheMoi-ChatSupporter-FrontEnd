@@ -20,7 +20,7 @@ export class ContentChatComponent implements OnInit, AfterViewChecked {
   isColapse = false;
   @ViewChild('scrollChat') scrollChat!: ElementRef;
   @Input() listFriend: any;
-
+  file!: any;
 
   constructor(private conversationState: ConversationState,
     private socketIoService: SocketIoService,
@@ -29,11 +29,20 @@ export class ContentChatComponent implements OnInit, AfterViewChecked {
     this.scrollToBottom();
   }
 
+  onFileSelected(event: any): void{
+    const file = (event.target.files[0] as File);
+    this.file = file;
+    console.log('file', this.file);
+    this.sendMessage(event);
+  }
+
+
   ngOnInit(): void {
     this.scrollToBottom();
     this.conversationState.$conversation.subscribe(conversation => {
       this.conversatinSelect = conversation;
       this.conversatinSelect && this.socketIoService.getAllMessageByConversation(this.conversatinSelect?._id).subscribe(res => {
+        console.log(res);
         this.listMessage = res.reverse();
       });
     });
@@ -51,18 +60,32 @@ export class ContentChatComponent implements OnInit, AfterViewChecked {
 
   initFormChat(): FormGroup {
     return new FormGroup({
-      contentChat: new FormControl('')
+      contentChat: new FormControl(''),
+      fileUpload: new FormControl(null),
     });
   }
 
   sendMessage(event: any): void {
+    const fd: FormData  = new FormData();
+    let typeMesage = 'text';
+    if (this.file.type.includes('image')) {
+      typeMesage = 'image';
+    } else if (this.file.type.includes('video')) {
+      typeMesage = 'video';
+    } else {
+      typeMesage = 'file';
+    }
+    fd.append('file',this.file);
+    fd.append('content', this.chatForm.value.contentChat);
+    fd.append('type', typeMesage);
+    fd.append('description', 'description');
     const message = new MessageModel();
-    message.content = this.chatForm.value.contentChat;
+    message.content = this.file ? this.file : this.chatForm.value.contentChat;
     message.type = 'text',
     message.description = 'message';
-    console.log(this.conversatinSelect);
-    this.conversatinSelect && this.socketIoService.sendMessage(message, this.conversatinSelect?._id).subscribe(res => {
+    this.conversatinSelect && this.socketIoService.sendMessage(fd, this.conversatinSelect?._id).subscribe(res => {
       this.chatForm.reset();
+      this.file = null;
     });
   }
 }

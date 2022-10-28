@@ -39,9 +39,9 @@ export class SocketIoService {
     }
   }
 
-  public sendMessage(message: MessageModel, conversationId: string): Observable<MessageModel> {
+  public sendMessage(message: FormData, conversationId: string): Observable<MessageModel> {
     const pathUrl = `${apiUrl}/${path.message}/${conversationId}`;
-    return this.apiService.post(pathUrl, message).pipe(
+    return this.apiService.postFormData(pathUrl, message).pipe(
       map((httpResponse: HttpResponse<any>) => {
         const body = httpResponse.body;
         return body;

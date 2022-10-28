@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+
+import { Component, Input, OnInit } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserModel } from 'src/app/share/models/user.model';
 
 @Component({
   selector: 'app-profile-modal',
@@ -6,8 +9,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile-modal.component.scss']
 })
 export class ProfileModalComponent implements OnInit {
-
-  constructor() { }
+  @Input() user!: UserModel;
+  constructor(private modal: NgbActiveModal) { }
 
   ngOnInit(): void {
   }

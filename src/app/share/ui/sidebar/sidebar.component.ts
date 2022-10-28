@@ -1,3 +1,4 @@
+import { UserModel } from 'src/app/share/models/user.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { TokenStorageService } from './../../services/token-storage/token-storage.service';
@@ -11,12 +12,14 @@ import { ProfileModalComponent } from '../modal/profile-modal/profile-modal.comp
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-
+  me!: UserModel;
   constructor(private tokenStorageService: TokenStorageService,
     private router: Router,
     private modalService: NgbModal) { }
 
   ngOnInit(): void {
+    this.me = this.tokenStorageService.getUser();
+    console.log('me', this.me);
   }
   signout($event: any): void {
     this.tokenStorageService.signOut();
@@ -26,8 +29,10 @@ export class SidebarComponent implements OnInit {
   }
   openModalProfile(event: any): void {
     const modalRef = this.modalService.open(ProfileModalComponent, {
-      size: 'lg'
+      size: 'md'
     })
+    modalRef.componentInstance.action = 'my-profile';
+    modalRef.componentInstance.user = this.me;
     modalRef.result.then((result) => {
     })
   }

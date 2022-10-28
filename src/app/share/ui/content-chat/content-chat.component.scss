@@ -87,3 +87,22 @@
     max-width: 60%;
     border-radius: 25px 25px 25px 10px;
 }
+.group-file {
+    a {
+        font-size: 1.2rem !important;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .fa-file {
+            font-size: 3rem !important;
+        }
+    }
+}
+
+//text-one-line
+.text-one-line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 70%;
+}

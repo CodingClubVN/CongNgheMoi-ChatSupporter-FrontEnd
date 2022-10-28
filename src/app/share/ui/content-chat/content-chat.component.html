@@ -26,13 +26,39 @@
             <div #scrollChat class="body-content-chat px-4 pt-2">
                 <div *ngFor="let message of listMessage">
                     <div class="w-100 d-flex justify-content-end mt-3" *ngIf="curentUser._id === message.fromUserId">
-                        <div class="message-item-curent-user px-4 py-2">
+                        <div class="message-item-curent-user px-4 py-2" *ngIf="message.type === 'text'">
                             {{message.content}}
+                        </div>
+                        <div *ngIf="message.type === 'image'">
+                            <a href="{{message.content}}">
+                                <img src="{{message.content}}" width="300" alt="">
+                            </a>
+                        </div>
+                        <div class="message-item-curent-user" *ngIf="message.type === 'file'">
+                            <div class="py-2 px-4 group-file my-auto ">
+                                <a href="{{message.content}}" class="text-decoration-none text-dark">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fa-regular fa-file"></i>
+                                        <p class="m-0 text-one-line ms-3">
+                                            {{message.content.split('?')[0].split('/').pop()}}
+                                        </p>
+                                    </div>
+                                    <i class="fa-regular fa-download rounded-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div *ngIf="message.type === 'video'">
+                            <video width="320" height="240" controls>
+                                <source src="{{message.content}}" type="video/mp4">
+                              </video>
                         </div>
                     </div>
                     <div *ngIf="curentUser._id !== message.fromUserId" class="mt-3">
-                        <div class="message-item-friend  px-4 py-2">
+                        <div class="message-item-friend  px-4 py-2" *ngIf="message.type === 'text'">
                             {{message.content}}
+                        </div>
+                        <div *ngIf="message.type === 'image'">
+                            <img src="{{message.content}}" width="300" alt="">
                         </div>
                     </div>
                 </div>
@@ -41,9 +67,11 @@
                 <div class="input-content-chat">
                     <div class="h-100 d-flex my-auto align-items-center justify-content-center px-5 ">
                         <div class="group-input-chat d-flex w-100 my-auto p-2 mx-3">
-                            <button class="btn btn-light btn-sm btn-icon btn-icon-only btn-rounded">
+                            <input type="file" name="" id="uploadFile" class="d-none" formControlName="fileUpload"
+                                (change)="onFileSelected($event)">
+                            <label for="uploadFile" class="btn btn-sm btn-icon btn-icon-only btn-rounded">
                                 <i class="fa-regular fa-paperclip"></i>
-                            </button>
+                            </label>
                             <input type="text" class="form-control" formControlName="contentChat"
                                 placeholder="Write a message..." (keyup.enter)="sendMessage($event)">
                             <button class="btn btn-light btn-sm btn-icon btn-icon-only btn-rounded">
