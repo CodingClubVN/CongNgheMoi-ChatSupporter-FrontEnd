@@ -18,9 +18,9 @@
         <p class="text-secondary">All chats</p>
     </div>
     <div class="list-conversation">
-        <div *ngFor="let conversation of listConversations" class="conversation" (click)="selectConversation(conversation)">
+        <div *ngFor="let conversation of listConversations" class="conversation" (click)="selectConversation(conversation)" >
             <div>
-                <div class="card-chat p-3 mb-3">
+                <div class="card-chat p-3 mb-3"  [ngClass]="conversationSelectId === conversation?._id ? 'active' : ''">
                     <div class="d-flex">
                         <div class="card-chat-avatar d-flex align-items-center">
                             <app-avatar-image-group [listUser]="conversation?.users"></app-avatar-image-group>

@@ -8,7 +8,7 @@ import { SocketIoService } from './../../services/socketio/socket-io.service';
 import { ConversationState } from './../../state/conversation.state';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ConversationModel } from '../../models/conversation.model';
-import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { switchMap } from 'rxjs';
 
 @Component({
@@ -16,7 +16,7 @@ import { switchMap } from 'rxjs';
   templateUrl: './content-chat.component.html',
   styleUrls: ['./content-chat.component.scss']
 })
-export class ContentChatComponent implements OnInit, AfterViewChecked {
+export class ContentChatComponent implements OnInit, AfterViewChecked, AfterViewInit{
   chatForm = this.initFormChat();
   conversatinSelect!: ConversationModel;
   listMessage: MessageModel[] = [];
@@ -30,6 +30,9 @@ export class ContentChatComponent implements OnInit, AfterViewChecked {
     private socketIoService: SocketIoService,
     private tokenStorageService: TokenStorageService,
     private conversationService: ConversationService) { }
+  ngAfterViewInit(): void {
+    this.scrollToBottom();
+  }
   ngAfterViewChecked(): void {
     this.scrollToBottom();
   }
@@ -80,14 +83,10 @@ export class ContentChatComponent implements OnInit, AfterViewChecked {
     } else if (this.file?.type.includes('application')) {
       typeMesage = 'file';
     }
-    fd.append('file', this.file);
+    fd.append('files', this.file);
     fd.append('content', this.chatForm.value.contentChat);
     fd.append('type', typeMesage);
     fd.append('description', 'description');
-    const message = new MessageModel();
-    message.content = this.file ? this.file : this.chatForm.value.contentChat;
-    message.type = 'text',
-      message.description = 'message';
     if (this.conversatinSelect?._id) {
       this.socketIoService.sendMessage(fd, this.conversatinSelect?._id).subscribe(res => {
         this.chatForm.reset();

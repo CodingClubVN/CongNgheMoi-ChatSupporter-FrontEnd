@@ -21,6 +21,7 @@ export class SidebarChatComponent implements OnInit, OnChanges, AfterViewChecked
   @Input() listConversations: any;
   @Input() listFriend: any;
   @Output() newItemEvent = new EventEmitter<ConversationCreateModel>();
+  conversationSelectId = '';
   @ViewChild('scrollChat') scrollChat!: ElementRef;
 
   constructor(private modalService: NgbModal,
@@ -30,7 +31,6 @@ export class SidebarChatComponent implements OnInit, OnChanges, AfterViewChecked
     private userState: UserState,
     private tokenStorageService: TokenStorageService) { }
   ngAfterViewChecked(): void {
-    this.scrollToBottom();
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.userState.$user.subscribe((res: any) => {
@@ -64,12 +64,6 @@ export class SidebarChatComponent implements OnInit, OnChanges, AfterViewChecked
   }
 
   ngOnInit(): void {
-    this.scrollToBottom();
-  }
-  scrollToBottom(): void {
-    try {
-      this.scrollChat.nativeElement.scrollTop = this.scrollChat.nativeElement.scrollHeight;
-    } catch (err) { }
   }
   openModalAddMember($event: any): void {
     const modalRef = this.modalService.open(AddMemberModalComponent, {
@@ -84,5 +78,6 @@ export class SidebarChatComponent implements OnInit, OnChanges, AfterViewChecked
   selectConversation(conversation: ConversationModel) {
     this.conversationState.setConversation(conversation);
     conversation?._id && this.socketIoService.selectRoom(conversation?._id);
+    this.conversationSelectId = conversation?._id;
   }
 }

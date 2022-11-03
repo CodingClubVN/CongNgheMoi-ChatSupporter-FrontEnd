@@ -12,6 +12,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class AddMemberModalComponent implements OnInit {
   @Input() listFriend: UserModel[] = [];
+  @Input() action!: string;
   listUserIdSelected: string[] = [];
   formConversation = this.initForm();
   constructor(private modal: NgbActiveModal) { }

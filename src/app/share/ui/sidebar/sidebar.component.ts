@@ -1,8 +1,8 @@
 import { UserModel } from 'src/app/share/models/user.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TokenStorageService } from './../../services/token-storage/token-storage.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import * as _ from 'lodash';
 import { ProfileModalComponent } from '../modal/profile-modal/profile-modal.component';
 
@@ -11,20 +11,26 @@ import { ProfileModalComponent } from '../modal/profile-modal/profile-modal.comp
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit{
   me!: UserModel;
+  status = '';
   constructor(private tokenStorageService: TokenStorageService,
     private router: Router,
     private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.me = this.tokenStorageService.getUser();
-    console.log('me', this.me);
+    console.log('me', this.router.url);
+    if (this.router.url.includes('chat')){
+      this.status = 'chat';
+    } else if (this.router.url.includes('list-user')) {
+      this.status = 'users';
+    }
   }
   signout($event: any): void {
     this.tokenStorageService.signOut();
-    this.router.navigate(['/auth/login']);
     if (!this.tokenStorageService.getToken()) {
+      this.router.navigate(['/auth/login']);
     }
   }
   openModalProfile(event: any): void {
@@ -35,5 +41,8 @@ export class SidebarComponent implements OnInit {
     modalRef.componentInstance.user = this.me;
     modalRef.result.then((result) => {
     })
+  }
+  onSelect(type: string) : void {
+    this.status = type;
   }
 }

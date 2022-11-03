@@ -1,6 +1,6 @@
 <div class="bg-content-chat w-100 h-100">
     <div class="d-flex">
-        <div class="" [ngClass]="!isColapse ? 'col-9' : 'col-12'">
+        <div class="" [ngClass]="isColapse ? 'col-9' : 'col-12'">
             <div class="header-content-chat d-flex justify-content-between mx-4">
                 <div class="d-flex my-auto">
                     <div class="card-chat-avatar">
@@ -27,7 +27,7 @@
                 <div *ngFor="let message of listMessage; let i = index">
                     <div class="w-100 d-flex justify-content-end mt-3" *ngIf="curentUser._id === message.fromUserId">
                         <div class="message-item-curent-user px-4 py-2" *ngIf="message.type === 'text'">
-                            {{message.content}}
+                            {{message.content[0]}}
                         </div>
                         <div *ngIf="message.type === 'image'">
                             <a href="{{message.content}}">
@@ -63,7 +63,7 @@
                                 src="{{message?.user?.avatarUrl}}" alt="" width="40" height="40">
                         </div>
                         <div class="message-item-friend px-4 py-2 ms-2" *ngIf="message.type === 'text'">
-                            {{message.content}}
+                            {{message.content[0]}}
                         </div>
                         <div *ngIf="message.type === 'image'" class="ms-2">
                             <a href="{{message.content}}">
@@ -116,7 +116,7 @@
                 </div>
             </form>
         </div>
-        <div class="option-chat col-3" *ngIf="!isColapse">
+        <div class="option-chat col-3" *ngIf="isColapse">
             <app-option-chat [conversatinSelect]="conversatinSelect" [listFriend]="listFriend"></app-option-chat>
         </div>
     </div>

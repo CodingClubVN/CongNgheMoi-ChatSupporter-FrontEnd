@@ -4,17 +4,17 @@
     </div>
     <div>
         <ul class="icon-group list-unstyled text-center mt-5">
-            <li class="icon-group-item mx-auto align-items-center active">
-                <a class="my-auto" routerLink="/home/chat">
+            <li routerLink="/home/chat" class="icon-group-item mx-auto align-items-center" (click)="onSelect('chat')" [ngClass]="status === 'chat' ? 'active' : ''">
+                <a class="my-auto">
                     <i class="my-auto fa-light fa-comment-dots"></i>
                 </a>
             </li>
-            <li class="icon-group-item mx-auto align-items-center mt-2">
-                <a class="my-auto" routerLink="/home/list-user">
+            <li routerLink="/home/list-user" class="icon-group-item mx-auto align-items-center mt-2" (click)="onSelect('users')" [ngClass]="status === 'users' ? 'active' : ''">
+                <a class="my-auto" >
                     <i class="fal fa-user-friends"></i>
                 </a>
             </li>
-            <li class="icon-group-item mx-auto align-items-center mt-2">
+            <li class="icon-group-item mx-auto align-items-center mt-2" (click)="onSelect('call')" [ngClass]="status === 'call' ? 'active' : ''">
                 <a class="my-auto">
                     <i class="fal fa-phone"></i>
                 </a>
@@ -24,17 +24,17 @@
     </div>
     <div>
         <ul class="icon-group list-unstyled text-center mt-4">
-            <li class="icon-group-item mx-auto align-items-center">
+            <li class="icon-group-item mx-auto align-items-center" (click)="onSelect('tag')" [ngClass]="status === 'tag' ? 'active' : ''">
                 <a class="my-auto">
                     <i class="fal fa-bookmark"></i>
                 </a>
             </li>
-            <li class="icon-group-item mx-auto align-items-center mt-2">
+            <li class="icon-group-item mx-auto align-items-center mt-2" (click)="onSelect('setting')" [ngClass]="status === 'setting' ? 'active' : ''">
                 <a class="my-auto">
                     <i class="fal fa-cog"></i>
                 </a>
             </li>
-            <li class="icon-group-item mx-auto align-items-center mt-2">
+            <li class="icon-group-item mx-auto align-items-center mt-2" (click)="onSelect('request')" [ngClass]="status === 'request' ? 'active' : ''">
                 <a class="my-auto">
                     <i class="fal fa-user-plus" ></i>
                 </a>

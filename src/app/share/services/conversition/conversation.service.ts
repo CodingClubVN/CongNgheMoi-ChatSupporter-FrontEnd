@@ -46,9 +46,29 @@ export class ConversationService {
     );
   }
 
-  public updateConversation(id: string, arrayUserId: string[]): Observable<ConversationModel> {
+  public addMemberToConversation(id: string, arrayUserId: string[]): Observable<ConversationModel> {
     const url = `${apiUrl}/${path.conversation}/${id}/add-user`;
     return this.apiService.put(url, arrayUserId).pipe(
+      map((httpResponse: HttpResponse<any>) => {
+        const body = httpResponse.body;
+        return body;
+      })
+    );
+  }
+
+  public updateConversationName(conversationName: string, conversationId: string): Observable<any> {
+    const url = `${apiUrl}/${path.conversation}/${conversationId}`;
+    return this.apiService.put(url, conversationName).pipe(
+      map((httpResponse: HttpResponse<any>) => {
+        const body = httpResponse.body;
+        return body;
+      })
+    );
+  }
+
+  public markRead(conversationId: string): Observable<any> {
+    const url = `${apiUrl}/${path.conversation}/${conversationId}/mark-read`;
+    return this.apiService.put(url, conversationId).pipe(
       map((httpResponse: HttpResponse<any>) => {
         const body = httpResponse.body;
         return body;
