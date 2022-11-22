@@ -13,15 +13,18 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class AddMemberModalComponent implements OnInit, OnChanges {
   @Input() listFriend: UserModel[] = [];
   @Input() action!: string;
+  @Input() conversation!: any;
   listUserIdSelected: string[] = [];
   formConversation = this.initForm();
+  users!: any;
   constructor(private modal: NgbActiveModal) { }
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('action', this.action);
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {
-    console.log('action', this.action);
+    this.users = this.listFriend;
+    if (this.action === 'add-member') {
+      this.listFriend = this.listFriend.filter(user => !this.conversation.users.some((member: any) => member._id === user._id));
+    }
   }
 
   initForm(): FormGroup {
@@ -30,7 +33,7 @@ export class AddMemberModalComponent implements OnInit, OnChanges {
     });
   }
   searchUser(event: any): void {
-    console.log('searchUser', event);
+    this.listFriend = this.users.filter((user: any) => user.account?.username.toLowerCase().includes(event.target.value.toLowerCase()));
   }
 
   getValueCheckbox(event: any) {

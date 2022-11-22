@@ -1,3 +1,4 @@
+import { finalize } from 'rxjs/operators';
 import { UserService } from './../../../share/services/user/user.service';
 import { TokenStorageService } from './../../../share/services/token-storage/token-storage.service';
 import { TokenModel } from './../../../share/models/token.model';
@@ -15,9 +16,9 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm = this.initFormLogin();
   constructor(private authService: AuthService,
-              private tokenStorageService: TokenStorageService,
-              private router: Router,
-              private userSerivce: UserService) { }
+    private tokenStorageService: TokenStorageService,
+    private router: Router,
+    private userSerivce: UserService) { }
 
   ngOnInit(): void {
   }
@@ -34,17 +35,21 @@ export class LoginComponent implements OnInit {
     this.authService.login(account).subscribe((data: TokenModel) => {
       this.tokenStorageService.saveToken(data.token);
       this.loginForm.reset();
-      const token = this.tokenStorageService.getToken();
-      if (token) {
-        this.router.navigate(['/home/chat']);
-      }
-      this.userSerivce.getMe().subscribe(me => {
+      this.userSerivce.getMe().pipe(
+        finalize(() => {
+          const token = this.tokenStorageService.getToken();
+          const user = this.tokenStorageService.getUser();
+          if (token && user) {
+            this.router.navigate(['/home/chat']);
+          }
+        })
+      ).subscribe(me => {
         this.tokenStorageService.addUser(me);
       });
-    }, 
-    error => {
-      console.log(error);
-    }
+    },
+      error => {
+        console.log(error);
+      }
     );
   }
 }

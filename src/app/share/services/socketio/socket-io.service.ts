@@ -89,4 +89,30 @@ export class SocketIoService {
       };
     });
   }
+
+  sendReqestFriend(): Observable<any>{
+    return new Observable<any>(observer => {
+      this.socket.on('send-friend-request', (data) => {
+        observer.next(data);
+      });
+
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+  }
+
+  acceptFriend(): Observable<any>{
+    return new Observable<any>(observer => {
+      this.socket.on('approved-friend', (data) => {
+        observer.next(data);
+      });
+
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+  }
+
+  
 }

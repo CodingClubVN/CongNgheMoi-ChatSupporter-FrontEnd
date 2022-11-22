@@ -20,7 +20,6 @@ export class SidebarComponent implements OnInit{
 
   ngOnInit(): void {
     this.me = this.tokenStorageService.getUser();
-    console.log('me', this.router.url);
     if (this.router.url.includes('chat')){
       this.status = 'chat';
     } else if (this.router.url.includes('list-user')) {

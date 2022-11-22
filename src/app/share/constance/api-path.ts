@@ -23,6 +23,14 @@ export const apiPath = {
     user: 'api/users',
   },
   message: {
-    message: 'api/messages/conversation'
+    message: 'api/messages/conversation',
+    tranfer: 'api/message/tranfer/conversation',
+    recover: 'api/message/tranfer/recover'
+  },
+  friend: {
+    request: 'api/friends/request',
+    approve: 'api/friends/request/approve',
+    reject: 'api/friends/request/reject',
+    friends: 'api/friends'
   }
 }

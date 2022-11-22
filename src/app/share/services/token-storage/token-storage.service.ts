@@ -18,7 +18,6 @@ export class TokenStorageService{
 
   public saveToken(token: string): void {
     const future = toInteger(Date.now()) + 5 * 60000;
-    console.log(future);
     this.cookieService.set(key.ID_KEY, token,{ 
       expires: future, 
       path: '/', 
@@ -37,32 +36,10 @@ export class TokenStorageService{
    });
   }
   public getUser(): any{
-    return JSON.parse(this.cookieService.get(key.USER));
+    return this.cookieService.get(key.USER) ? JSON.parse(this.cookieService.get(key.USER)) : '';
   }
-  // public saveRefreshToken(token: string): void {
-  //   this.cookieService?.clear(key.Refresh_Token);
-  //   this.cookieService?.store(key.Refresh_Token, token);
-  // }
-  // public getRefreshToken(): any {
-  //   return this.cookieService.retrieve(key.Refresh_Token);
-  // }
   public signOut(): void {
     this.cookieService.delete(key.ID_KEY, '/' );
+    this.cookieService.delete(key.USER, '/' );
   }
-  // public saveUsername(username: string): void {
-  //   this.cookieService.store(key.USERNAME_KEY, username);
-  // }
-  // public getUsername(): void{
-  //   this.cookieService.retrieve(key.USERNAME_KEY);
-  // }
-  // public addCart(product: any): void{
-  //   this.cookieService.store(key.CART, JSON.stringify(product));
-  // }
-  // public getCartItem(): any{
-  //   return this.cookieService.retrieve(key.CART) ? JSON.parse(this.cookieService.retrieve(key.CART)) : [];
-  // }
-  // public clearOrder(): any{
-  //   this.cookieService.clear(key.USER);
-  //   this.cookieService.clear(key.CART);
-  // }
 }

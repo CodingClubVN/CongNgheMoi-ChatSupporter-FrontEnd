@@ -13,4 +13,5 @@ export class UserModel {
     updatedAt!: Date;
     createdAt!: Date;
     account!: AccountModel;
+    friendRequestStatus!: string;
 }

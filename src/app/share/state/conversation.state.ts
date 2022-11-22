@@ -15,11 +15,18 @@ export class ConversationState implements OnDestroy {
     private conversationSubject = new BehaviorSubject<ConversationModel | null>(null);
     public $conversation = this.conversationSubject.asObservable();
 
+    private addMemberStatusSubject = new BehaviorSubject<boolean>(false);
+    public $isAddMember = this.addMemberStatusSubject.asObservable();
+
     subscription: Subscription = new Subscription();
 
     constructor() { }
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
+    }
+
+    public addMemberStatus(status: boolean): void {
+        this.addMemberStatusSubject.next(status);
     }
 
     public setStateUser(conversationModel: ConversationModel[]): void {

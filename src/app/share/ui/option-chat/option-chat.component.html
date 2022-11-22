@@ -38,7 +38,7 @@
                                 <img src="{{user.avatarUrl}}" class="rounded-circle" width="40" height="40" alt="">
                                 <span class="ms-3 fw-bold">{{user?.account?.username}}</span>
                             </div>
-                            <i class="fa-light fa-trash me-4 my-auto text-danger"></i>
+                            <i class="fa-light fa-trash me-4 my-auto text-danger" (click)="removeMember(user)"></i>
                         </li>
                     </ul>
                 </li>

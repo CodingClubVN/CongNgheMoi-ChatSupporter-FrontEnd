@@ -36,7 +36,7 @@ export class ConversationService {
     );
   }
 
-  public getConversationById(id: number): Observable<ConversationModel> {
+  public getConversationById(id: string): Observable<ConversationModel> {
     const url = `${apiUrl}/${path.conversation}/${id}`;
     return this.apiService.get(url).pipe(
       map((httpResponse: HttpResponse<any>) => {
@@ -47,8 +47,11 @@ export class ConversationService {
   }
 
   public addMemberToConversation(id: string, arrayUserId: string[]): Observable<ConversationModel> {
+    const data = {
+      arrayUserId: arrayUserId
+    }
     const url = `${apiUrl}/${path.conversation}/${id}/add-user`;
-    return this.apiService.put(url, arrayUserId).pipe(
+    return this.apiService.put(url, data).pipe(
       map((httpResponse: HttpResponse<any>) => {
         const body = httpResponse.body;
         return body;
@@ -69,6 +72,16 @@ export class ConversationService {
   public markRead(conversationId: string): Observable<any> {
     const url = `${apiUrl}/${path.conversation}/${conversationId}/mark-read`;
     return this.apiService.put(url, conversationId).pipe(
+      map((httpResponse: HttpResponse<any>) => {
+        const body = httpResponse.body;
+        return body;
+      })
+    );
+  }
+
+  public removeMenberFromConversation(conversationId: string, userId: string): Observable<any> {
+    const url = `${apiUrl}/${path.conversation}/${conversationId}/users/${userId}/remove-user`;
+    return this.apiService.put(url).pipe(
       map((httpResponse: HttpResponse<any>) => {
         const body = httpResponse.body;
         return body;

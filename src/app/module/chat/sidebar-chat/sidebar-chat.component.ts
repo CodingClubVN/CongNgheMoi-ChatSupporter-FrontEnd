@@ -23,9 +23,9 @@ export class SidebarChatComponent implements OnInit, OnChanges, AfterViewChecked
   @Output() newItemEvent = new EventEmitter<ConversationCreateModel>();
   conversationSelectId = '';
   @ViewChild('scrollChat') scrollChat!: ElementRef;
-
+  conversations: any;
+  currentUser = this.tokenStorageService.getUser();
   constructor(private modalService: NgbModal,
-    private conversationService: ConversationService,
     private conversationState: ConversationState,
     private socketIoService: SocketIoService,
     private userState: UserState,
@@ -33,12 +33,14 @@ export class SidebarChatComponent implements OnInit, OnChanges, AfterViewChecked
   ngAfterViewChecked(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
+    this.conversations = this.listConversations;
+    console.log(this.conversations);
+    console.log(this.currentUser);
     this.userState.$user.subscribe((res: any) => {
       if (res) {
         const listUser = [];
         listUser.push(res);
         listUser.push(this.tokenStorageService.getUser());
-        listUser.push
         const conversation = new ConversationModel();
         conversation.conversationName = res.fullname;
         conversation.users = listUser;
@@ -55,10 +57,10 @@ export class SidebarChatComponent implements OnInit, OnChanges, AfterViewChecked
     this.socketIoService.getConversation().pipe().subscribe((conversation: any) => {
       if (conversation) {
         this.listConversations = this.listConversations.filter((res: any) => res._id && res._id !== conversation.conversation?._id);
-        if (this.listConversations[0]._id !== conversation.conversation?._id) {
+        if (this.listConversations[0]?._id !== conversation.conversation?._id) {
           this.listConversations.unshift(conversation.conversation);
-          this.selectConversation(this.listConversations[0]);
         }
+        this.listConversations[0] && this.selectConversation(this.listConversations[0]);
       }
     });
   }
@@ -70,6 +72,7 @@ export class SidebarChatComponent implements OnInit, OnChanges, AfterViewChecked
       size: 'lg'
     })
     modalRef.componentInstance.listFriend = this.listFriend;
+    modalRef.componentInstance.action = 'create-conversation';
     modalRef.result.then((result) => {
       this.newItemEvent.emit(result);
     })
@@ -79,5 +82,9 @@ export class SidebarChatComponent implements OnInit, OnChanges, AfterViewChecked
     this.conversationState.setConversation(conversation);
     conversation?._id && this.socketIoService.selectRoom(conversation?._id);
     this.conversationSelectId = conversation?._id;
+  }
+
+  searchConversation(event: any): void {
+    this.listConversations = this.conversations.filter((conversation: any) => conversation.conversationName.replace(/[\s]/g,'').toLowerCase().indexOf(event.target.value.toLowerCase()) === 0 );
   }
 }

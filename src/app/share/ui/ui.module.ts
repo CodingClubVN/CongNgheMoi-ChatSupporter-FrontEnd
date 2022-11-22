@@ -8,8 +8,8 @@ import { AddMemberModalComponent } from './modal/add-member-modal/add-member-mod
 import { AvatarImageGroupComponent } from './avatar-image-group/avatar-image-group.component';
 import { OptionChatComponent } from './option-chat/option-chat.component';
 import { ProfileModalComponent } from './modal/profile-modal/profile-modal.component';
-
-
+import { ListRequestComponent } from './modal/list-request/list-request.component';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 @NgModule({
   declarations: [
@@ -18,12 +18,14 @@ import { ProfileModalComponent } from './modal/profile-modal/profile-modal.compo
     AddMemberModalComponent,
     AvatarImageGroupComponent,
     OptionChatComponent,
-    ProfileModalComponent
+    ProfileModalComponent,
+    ListRequestComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PickerModule
   ],
   exports: [
     SidebarComponent,

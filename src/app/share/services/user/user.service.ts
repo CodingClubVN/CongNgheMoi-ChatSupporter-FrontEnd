@@ -22,7 +22,7 @@ export class UserService {
     const pathUrl = `${apiUrl}/${path.user}`;
     return this.apiService.get(pathUrl).pipe(
       map((httpResponse: HttpResponse<any>) => {
-        const body = httpResponse.body.data;
+        const body = httpResponse.body;
         return body;
       })
     );

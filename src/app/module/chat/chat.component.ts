@@ -5,6 +5,7 @@ import { TokenStorageService } from './../../share/services/token-storage/token-
 import { ConversationModel } from './../../share/models/conversation.model';
 import { ConversationService } from './../../share/services/conversition/conversation.service';
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { SocketIoService } from 'src/app/share/services/socketio/socket-io.service';
 
 @Component({
   selector: 'app-chat',
@@ -19,10 +20,16 @@ export class ChatComponent implements OnInit {
 
   constructor(private conversationService: ConversationService,
     private tokenStorageService: TokenStorageService,
-    private userService: UserService) { }
+    private userService: UserService,
+    private socketIoService: SocketIoService,) { }
 
   ngOnInit(): void {
     this.listenService();
+    this.socketIoService.getConversation().pipe().subscribe((conversation: any) => {
+      if (conversation) {
+        this.listenService();
+      }
+    }); 
   }
 
   listenService() {
