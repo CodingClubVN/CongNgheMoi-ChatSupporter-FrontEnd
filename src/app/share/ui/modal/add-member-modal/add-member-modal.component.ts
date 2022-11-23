@@ -50,4 +50,7 @@ export class AddMemberModalComponent implements OnInit, OnChanges {
     conversation.arrayUserId = this.listUserIdSelected;
     this.modal.close(conversation);
   }
+  close(event: any): void {
+    this.modal.close();
+  }
 }
