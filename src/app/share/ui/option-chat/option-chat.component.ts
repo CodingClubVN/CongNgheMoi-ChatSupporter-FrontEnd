@@ -1,3 +1,4 @@
+import { TokenStorageService } from './../../services/token-storage/token-storage.service';
 import { ConversationState } from './../../state/conversation.state';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
@@ -11,17 +12,22 @@ import { ConversationService } from '../../services/conversition/conversation.se
   styleUrls: ['./option-chat.component.scss']
 })
 export class OptionChatComponent implements OnInit {
-  @Input('conversatinSelect') conversatinSelect!: ConversationModel | null;
+  @Input('conversatinSelect') conversatinSelect!: any | null;
   @Input() listFriend: any;
   @Output() newItemEvent = new EventEmitter<boolean>(false);
   conversation: any = null
+  currentUser = this.tokenStorageService.getUser();
   constructor(private modalService: NgbModal,
     private conversationService: ConversationService,
-    private conversationState: ConversationState) { }
+    private conversationState: ConversationState,
+    private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
-    this.conversationState.$conversation.subscribe(res => {
-      this.conversation = res;
+    this.conversationState.$conversation.subscribe((conversation: any) => {
+      this.conversationService.getConversationById(conversation?._id).subscribe(res => {
+        this.conversatinSelect = res;
+        console.log(this.conversatinSelect);
+      })
     })
   }
 
@@ -47,6 +53,12 @@ export class OptionChatComponent implements OnInit {
   removeMember(user: any) {
     this.conversationService.removeMenberFromConversation(this.conversation._id, user._id).subscribe(() => {
       this.reloadData(this.conversation._id);
+    })
+  }
+
+  outConversation(event: any): void {
+    this.conversationService.deleteConversation(this.conversatinSelect._id).subscribe((res: any) => {
+      this.conversationState.deleteConversationStatus(true);
     })
   }
 }

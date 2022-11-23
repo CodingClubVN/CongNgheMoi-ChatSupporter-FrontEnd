@@ -18,11 +18,18 @@ export class ConversationState implements OnDestroy {
     private addMemberStatusSubject = new BehaviorSubject<boolean>(false);
     public $isAddMember = this.addMemberStatusSubject.asObservable();
 
+    private isdeleteConversationSubject = new BehaviorSubject<boolean>(false);
+    public $isDeleteConversation = this.isdeleteConversationSubject.asObservable();
+
     subscription: Subscription = new Subscription();
 
     constructor() { }
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
+    }
+
+    public deleteConversationStatus(status: boolean): void {
+        this.isdeleteConversationSubject.next(status);
     }
 
     public addMemberStatus(status: boolean): void {

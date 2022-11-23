@@ -15,10 +15,10 @@ const path = apiPath.user;
 export class UserService {
   private userSubject = new BehaviorSubject<UserModel | null>(null);
   public $user = this.userSubject.asObservable();
-  
+
   constructor(private apiService: ApiService) { }
 
-  public getAllUser(): Observable<UserModel[]>{
+  public getAllUser(): Observable<UserModel[]> {
     const pathUrl = `${apiUrl}/${path.user}`;
     return this.apiService.get(pathUrl).pipe(
       map((httpResponse: HttpResponse<any>) => {
@@ -28,7 +28,7 @@ export class UserService {
     );
   }
 
-  public getMe(): Observable<UserModel>{
+  public getMe(): Observable<UserModel> {
     const pathUrl = `${apiUrl}/${path.me}`;
     return this.apiService.get(pathUrl).pipe(
       map((httpResponse: HttpResponse<any>) => {
@@ -36,5 +36,14 @@ export class UserService {
         return body;
       })
     );
+  }
+
+  public updateUser(userId: string, data: any): Observable<UserModel> {
+    const pathUrl = `${apiUrl}/${path.user}/${userId}`;
+    return this.apiService.put(pathUrl, data).pipe(
+      map((httpResponse: HttpResponse<any>) => {
+        const body = httpResponse.body;
+        return body;
+      }));
   }
 }

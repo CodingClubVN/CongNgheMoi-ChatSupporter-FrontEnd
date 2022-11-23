@@ -1,3 +1,6 @@
+.bg-content-chat{
+    position: relative;
+}
 .card-chat-avatar {
     position: relative;
 
@@ -23,11 +26,19 @@
 }
 
 .body-content-chat {
-    height: 80vh;
+    height: 75vh;
     background-color: #EFF4FB;
     overflow-y: auto;
 }
 
+.input-content-chat {
+    position: absolute;
+    bottom: 4%;
+    height: fit-content;
+    width: 100%;
+    z-index: 10;
+    background-color: #ffffff;
+}
 .status-text {
     font-size: 0.9em;
 }
@@ -52,13 +63,10 @@
     }
 }
 
-.input-content-chat {
-    height: 10vh;
-}
-
 .group-input-chat {
     background-color: #EAF3FF;
     border-radius: 10px;
+    margin: 10px 0;
 
     & button {
         background: transparent;
@@ -110,4 +118,39 @@
 .avatar-chat-item {
     width: 40px;
     height: 40px;
+}
+
+
+.message-content {
+    .action-message i{
+        display: none;
+    }
+}
+.message-content:hover{
+    .action-message {
+        display: block;
+        margin: 0 10px;
+        i {
+            display: block;
+            margin-bottom: 15px;
+        }
+        i:hover {
+            font-weight: bold;
+        }
+    }
+}
+.backgroud-reply {
+    margin: 10px;
+    background-color: #ffffff;
+    padding: 5px 20px;
+    border-radius: 10px;
+    position: relative;
+    i {
+        position: absolute;
+        top: 10;
+        right: 1%;
+    }
+    i:hover {
+        font-weight: bold;
+    }
 }

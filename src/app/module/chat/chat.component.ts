@@ -1,3 +1,4 @@
+import { ConversationState } from './../../share/state/conversation.state';
 import { UserService } from './../../share/services/user/user.service';
 import { UserState } from './../../share/state/user.state';
 import { UserModel } from 'src/app/share/models/user.model';
@@ -21,7 +22,8 @@ export class ChatComponent implements OnInit {
   constructor(private conversationService: ConversationService,
     private tokenStorageService: TokenStorageService,
     private userService: UserService,
-    private socketIoService: SocketIoService,) { }
+    private socketIoService: SocketIoService,
+    private conversationState: ConversationState) { }
 
   ngOnInit(): void {
     this.listenService();
@@ -30,6 +32,11 @@ export class ChatComponent implements OnInit {
         this.listenService();
       }
     }); 
+    this.conversationState.$isDeleteConversation.subscribe(res => {
+      if (res) {
+        this.listenService();
+      }
+    })
   }
 
   listenService() {

@@ -13,6 +13,10 @@
                                     {{user?.account?.username}}</h6>
                             </div>
                         </div>
+                        <h6 class="content-chat-name fw-bolder m-0 mt-3"
+                            *ngIf="conversatinSelect?.conversationName !== 'one-to-one-codingclub'">
+                            {{conversatinSelect?.conversationName}}
+                        </h6>
                         <span class="status-text text-secondary">Online</span>
                     </div>
                 </div>
@@ -30,39 +34,50 @@
             </div>
             <div #scrollChat class="body-content-chat px-4 pt-2">
                 <div *ngFor="let message of listMessage; let i = index">
-
-                    <div class="w-100 d-flex justify-content-end mt-3"
+                    <div class="message-content w-100 d-flex justify-content-end mt-3"
                         *ngIf="curentUser._id === message.fromUserId && message.type !== 'notification'">
-                        <div class="message-item-curent-user px-4 py-2" *ngIf="message.type === 'text'">
-                            <p>{{message.content[0]}}</p>
+                        <div *ngIf="message?.status === 'recovered'" class="message-content message-item-curent-user px-4 py-2">
+                            <i class="fw-light text-secondary">
+                                Message has been recovered
+                            </i>
                         </div>
-                        <div *ngIf="message.type === 'image'" class="row w-25"
-                            [ngClass]="message?.content?.length !== 1 ? 'justify-content-end' : 'justify-content-start'">
-                            <div *ngFor="let url of message.content" class="p-0"
-                                [ngClass]="message?.content?.length !== 1 ? 'col-6' : 'col-12'">
-                                <a href="{{url}}">
-                                    <img src="{{url}}" width="100%" height="100%" alt="" class="rounded-2">
-                                </a>
+                        <div *ngIf="message?.status !== 'recovered'" class="w-100 d-flex justify-content-end">
+                            <div class="action-message d-flex align-items-end">
+                                <i class="fa-regular fa-trash" (click)="recoverMessage(message)"></i>
+                                <i class="fa-regular fa-comment-dots ms-2" (click)="replyMessage(message)"></i>
+                                <i class="fa-regular fa-share-all ms-2" (click)="forwardMessage(message)"></i>
                             </div>
-                        </div>
-                        <div class="message-item-curent-user" *ngIf="message.type === 'file'">
-                            <div class="py-2 px-4 group-file my-auto ">
-                                <a href="{{message.content[0]}}" class="text-decoration-none text-dark">
-                                    <div class="d-flex align-items-center">
-                                        <i class="fa-regular fa-file"></i>
-                                        <p class="m-0 text-one-line ms-3">
-                                            {{message.content[0].split('?')[0].split('/').pop()}}
-                                        </p>
-                                    </div>
-                                    <i class="fa-regular fa-download rounded-2"></i>
-                                </a>
+                            <div class="message-content message-item-curent-user px-4 py-2" *ngIf="message.type === 'text'">
+                                <p>{{message.content[0]}}</p>
                             </div>
-                        </div>
-                        <div *ngIf="message.type === 'video'">
-                            <div *ngFor="let url of message.content">
-                                <video width="350" height="250" controls>
-                                    <source src="{{url}}" type="video/mp4">
-                                </video>
+                            <div *ngIf="message.type === 'image'" class="message-content row w-25"
+                                [ngClass]="message?.content?.length !== 1 ? 'justify-content-end' : 'justify-content-start'">
+                                <div *ngFor="let url of message.content" class="p-0"
+                                    [ngClass]="message?.content?.length !== 1 ? 'col-6' : 'col-12'">
+                                    <a href="{{url}}">
+                                        <img src="{{url}}" width="100%" height="100%" alt="" class="rounded-2">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="message-content message-item-curent-user" *ngIf="message.type === 'file'">
+                                <div class="py-2 px-4 group-file my-auto ">
+                                    <a href="{{message.content[0]}}" class="text-decoration-none text-dark">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fa-regular fa-file"></i>
+                                            <p class="m-0 text-one-line ms-3">
+                                                {{message.content[0].split('?')[0].split('/').pop()}}
+                                            </p>
+                                        </div>
+                                        <i class="fa-regular fa-download rounded-2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div *ngIf="message.type === 'video'" class="message-content">
+                                <div *ngFor="let url of message.content">
+                                    <video width="350" height="250" controls>
+                                        <source src="{{url}}" type="video/mp4">
+                                    </video>
+                                </div>
                             </div>
                         </div>
                         <div class="avatar-chat-item ms-3 d-flex align-items-end h-100">
@@ -72,44 +87,58 @@
                         </div>
                     </div>
                     <div *ngIf="curentUser._id !== message.fromUserId && message.type !== 'notification'"
-                        class="mt-3 d-flex">
+                        class="message-content mt-3 d-flex">
                         <div class="avatar-chat-item">
                             <img class="rounded-circle mt-3"
                                 *ngIf="listMessage[i + 1]?.fromUserId !== message?.fromUserId && message.type !== 'notification'"
                                 src="{{message?.user?.avatarUrl}}" alt="" width="40" height="40">
                         </div>
-                        <div class="message-item-friend px-4 py-2 ms-2" *ngIf="message.type === 'text'">
+                        <div *ngIf="message?.status === 'recovered'" class="message-content message-item-friend px-4 py-2 ms-2">
                             <b class="m-0"
                                 *ngIf="listMessage[i - 1]?.fromUserId !== message?.fromUserId">{{message.user.account.username}}</b>
-                            <p>{{message.content[0]}}</p>
+                            <br/>
+                            <i class="fw-light text-secondary">
+                                Message has been recovered
+                            </i>
                         </div>
-                        <div *ngIf="message.type === 'image'" class="row w-25 ms-2"
-                            [ngClass]="message?.content?.length !== 1 ? 'justify-content-end' : 'justify-content-start'">
-                            <div *ngFor="let url of message.content" class="col-6 p-0"
-                                [ngClass]="message?.content?.length !== 1 ? 'col-6' : 'col-12'">
-                                <a href="{{url}}">
-                                    <img src="{{url}}" width="100%" height="100%" alt="" class="rounded-2">
-                                </a>
+                        <div *ngIf="message?.status !== 'recovered'" class="w-100 d-flex justify-content-start">
+                            <div class="message-content message-item-friend px-4 py-2 ms-2" *ngIf="message.type === 'text'">
+                                <b class="m-0"
+                                    *ngIf="listMessage[i - 1]?.fromUserId !== message?.fromUserId">{{message.user.account.username}}</b>
+                                <p>{{message.content[0]}}</p>
                             </div>
-                        </div>
-                        <div class="message-item-curent-user ms-2" *ngIf="message.type === 'file'">
-                            <div class="py-2 px-4 group-file my-auto ">
-                                <a href="{{message.content[0]}}" class="text-decoration-none text-dark">
-                                    <div class="d-flex align-items-center">
-                                        <i class="fa-regular fa-file"></i>
-                                        <p class="m-0 text-one-line ms-3">
-                                            {{message.content.split('?')[0].split('/').pop()}}
-                                        </p>
-                                    </div>
-                                    <i class="fa-regular fa-download rounded-2"></i>
-                                </a>
+                            <div *ngIf="message.type === 'image'" class="message-content row w-25 ms-2"
+                                [ngClass]="message?.content?.length !== 1 ? 'justify-content-end' : 'justify-content-start'">
+                                <div *ngFor="let url of message.content" class="col-6 p-0"
+                                    [ngClass]="message?.content?.length !== 1 ? 'col-6' : 'col-12'">
+                                    <a href="{{url}}">
+                                        <img src="{{url}}" width="100%" height="100%" alt="" class="rounded-2">
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        <div *ngIf="message.type === 'video'" class="ms-2">
-                            <div *ngFor="let url of message.content">
-                                <video width="350" height="250" controls>
-                                    <source src="{{url}}" type="video/mp4">
-                                </video>
+                            <div class="message-content message-item-curent-user ms-2" *ngIf="message.type === 'file'">
+                                <div class="py-2 px-4 group-file my-auto ">
+                                    <a href="{{message.content[0]}}" class="text-decoration-none text-dark">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fa-regular fa-file"></i>
+                                            <p class="m-0 text-one-line ms-3">
+                                                {{message.content.split('?')[0].split('/').pop()}}
+                                            </p>
+                                        </div>
+                                        <i class="fa-regular fa-download rounded-2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div *ngIf="message.type === 'video'" class="message-content ms-2">
+                                <div *ngFor="let url of message.content">
+                                    <video width="350" height="250" controls>
+                                        <source src="{{url}}" type="video/mp4">
+                                    </video>
+                                </div>
+                            </div>
+                            <div class="action-message d-flex align-items-end">
+                                <i class="fa-regular fa-comment-dots" (click)="replyMessage(message)"></i>
+                                <i class="fa-regular fa-share-all ms-2" (click)="forwardMessage(message)"></i>
                             </div>
                         </div>
                     </div>
@@ -122,26 +151,34 @@
             </div>
             <form [formGroup]="chatForm">
                 <div class="input-content-chat">
-                    <div class="h-100 d-flex my-auto align-items-center justify-content-center px-5 ">
-                        <div class="group-input-chat d-flex w-100 my-auto p-2 mx-3">
-                            <input type="file" name="" id="uploadFile" class="d-none" formControlName="fileUpload"
-                                multiple (change)="onFileSelected($event)">
-                            <label for="uploadFile" class="btn btn-sm btn-icon btn-icon-only btn-rounded">
-                                <i class="fa-regular fa-paperclip"></i>
-                            </label>
-                            <input type="text" class="form-control" formControlName="contentChat"
-                                placeholder="Write a message...">
-                            <div class="btn-group dropup">
-                                <input id="emoji" type="button"
-                                    class="btn btn-light btn-sm btn-icon btn-icon-only btn-rounded"
-                                    data-bs-toggle="dropdown">
-                                <label for="emoji" class="btn btn-sm btn-icon btn-icon-only btn-rounded">
-                                    <i class="fa-regular fa-face-smile"></i>
+                    <div class="h-100 d-flex my-auto align-items-center justify-content-center px-5 w-100">
+                        <div class="group-input-chat w-100 mx-3">
+                            <div *ngIf="messageReplySelect" class="backgroud-reply">
+                                <i class="fa-regular fa-circle-xmark" (click)="cancelReply($event)"></i>
+                                <p class="content-reply">
+                                    {{messageReplySelect?.content}}
+                                </p>
+                            </div>
+                            <div class="d-flex w-100 my-auto p-2 ">
+                                <input type="file" name="" id="uploadFile" class="d-none" formControlName="fileUpload"
+                                    multiple (change)="onFileSelected($event)">
+                                <label for="uploadFile" class="btn btn-sm btn-icon btn-icon-only btn-rounded">
+                                    <i class="fa-regular fa-paperclip"></i>
                                 </label>
-                                <ul class="dropdown-menu">
-                                    <emoji-mart title="Pick your emoji…" emoji="point_up"
-                                        (emojiClick)="addEmoji($event)"></emoji-mart>
-                                </ul>
+                                <input type="text" class="form-control" formControlName="contentChat"
+                                    placeholder="Write a message...">
+                                <div class="btn-group dropup">
+                                    <input id="emoji" type="button"
+                                        class="btn btn-light btn-sm btn-icon btn-icon-only btn-rounded"
+                                        data-bs-toggle="dropdown">
+                                    <label for="emoji" class="btn btn-sm btn-icon btn-icon-only btn-rounded">
+                                        <i class="fa-regular fa-face-smile"></i>
+                                    </label>
+                                    <ul class="dropdown-menu">
+                                        <emoji-mart title="Pick your emoji…" emoji="point_up"
+                                            (emojiClick)="addEmoji($event)"></emoji-mart>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">

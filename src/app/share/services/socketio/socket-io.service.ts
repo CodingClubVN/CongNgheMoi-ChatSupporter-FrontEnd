@@ -114,5 +114,29 @@ export class SocketIoService {
     });
   }
 
-  
+  recoverMessage(messageId: string): Observable<any>{
+    const data = {
+      id: messageId
+    }
+    const pathUrl = `${apiUrl}/api/messages/${messageId}/recover`;
+    return this.apiService.put(pathUrl, data).pipe(
+      map((httpResponse: HttpResponse<any>) => {
+        const body = httpResponse.body;
+        return body;
+      }
+    ));
+  }
+
+  public forwardMessage(messageId: string, conversationId: string): Observable<any> {
+    const data = {
+      messageId: messageId,
+    }
+    const url = `${apiUrl}/${path.tranfer}/${conversationId}`;
+    return this.apiService.post(url, data).pipe(
+      map((httpResponse: HttpResponse<any>) => {
+        const body = httpResponse.body;
+        return body;
+      })
+    );
+  }
 }

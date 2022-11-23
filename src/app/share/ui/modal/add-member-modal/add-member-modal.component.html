@@ -1,5 +1,5 @@
 <div class="card card-custom card-stretch gutter-b">
-    <form [formGroup]="formConversation" (ngSubmit)="onSubmit($event)">
+    <form [formGroup]="formConversation">
         <div class="card-header border-0 text-center my-auto py-3">
             <h5 class="text-uppercase fw-bold">{{action === 'create-conversation' ? 'Create Group Chat' : 'Add members'}}</h5>
         </div>
@@ -38,8 +38,9 @@
         </div>
         <div class="card-footer border-0 my-auto py-3">
             <div class="d-flex justify-content-end">
-                <button class="btn btn-danger me-2">Cancel</button>
-                <button type="submit" class="btn btn-primary">{{action === 'create-conversation' ? 'Create Group' : 'Add'}}</button>
+                <button class="btn btn-danger me-2" (click)="close($event)">Cancel</button>
+                <button type="submit" class="btn btn-primary" (click)="onSubmit($event)" [disabled]="formConversation.invalid" *ngIf="action === 'create-conversation'">Create Group</button>
+                <button type="submit" class="btn btn-primary" (click)="onSubmit($event)" *ngIf="action === 'add-member'">Add</button>
             </div>
         </div>
     </form>

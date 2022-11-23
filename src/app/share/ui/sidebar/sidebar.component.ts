@@ -1,3 +1,4 @@
+import { UserService } from './../../services/user/user.service';
 import { UserModel } from 'src/app/share/models/user.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,7 +17,8 @@ export class SidebarComponent implements OnInit{
   status = '';
   constructor(private tokenStorageService: TokenStorageService,
     private router: Router,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+    private userService: UserService) { }
 
   ngOnInit(): void {
     this.me = this.tokenStorageService.getUser();
@@ -39,6 +41,14 @@ export class SidebarComponent implements OnInit{
     modalRef.componentInstance.action = 'my-profile';
     modalRef.componentInstance.user = this.me;
     modalRef.result.then((result) => {
+      console.log(result);
+      console.log(this.me);
+      this.me.email = result.email;
+      this.me.phone = result.phone;
+      this.userService.updateUser(this.me?._id, this.me).subscribe((res: any) => {
+        this.me = res;
+        this.tokenStorageService.addUser(this.me);
+      });
     })
   }
   onSelect(type: string) : void {

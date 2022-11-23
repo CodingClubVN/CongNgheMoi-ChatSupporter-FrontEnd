@@ -1,3 +1,6 @@
+import { ConfirmDiglogComponent } from './../modal/confirm-diglog/confirm-diglog.component';
+import { ListConversationModalComponent } from './../modal/list-conversation-modal/list-conversation-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from './../../services/user/user.service';
 import { ConversationCreateModel } from './../../models/conversation.model';
 import { ConversationService } from './../../services/conversition/conversation.service';
@@ -8,7 +11,7 @@ import { SocketIoService } from './../../services/socketio/socket-io.service';
 import { ConversationState } from './../../state/conversation.state';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ConversationModel } from '../../models/conversation.model';
-import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewChecked, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewChecked, AfterViewInit, OnDestroy } from '@angular/core';
 import { switchMap, map } from 'rxjs';
 import { isEmpty } from 'lodash';
 
@@ -17,7 +20,7 @@ import { isEmpty } from 'lodash';
   templateUrl: './content-chat.component.html',
   styleUrls: ['./content-chat.component.scss']
 })
-export class ContentChatComponent implements OnInit, AfterViewChecked, AfterViewInit {
+export class ContentChatComponent implements OnInit, AfterViewChecked, AfterViewInit, OnDestroy {
   chatForm = this.initFormChat();
   conversatinSelect!: ConversationModel;
   listMessage: MessageModel[] = [];
@@ -26,11 +29,16 @@ export class ContentChatComponent implements OnInit, AfterViewChecked, AfterView
   @ViewChild('scrollChat') scrollChat!: ElementRef;
   @Input() listFriend: any;
   file: any[] = [];
+  messageReplySelect: any = null;
 
   constructor(private conversationState: ConversationState,
     private socketIoService: SocketIoService,
     private tokenStorageService: TokenStorageService,
-    private conversationService: ConversationService) { }
+    private conversationService: ConversationService,
+    private modalService: NgbModal) { }
+  ngOnDestroy(): void {
+    this.messageReplySelect = new MessageModel();
+  }
   ngAfterViewInit(): void {
     this.scrollToBottom();
   }
@@ -49,12 +57,16 @@ export class ContentChatComponent implements OnInit, AfterViewChecked, AfterView
 
   ngOnInit(): void {
     this.curentUser = this.tokenStorageService.getUser();
+    this.loadData();
+  }
+
+  loadData(): void {
     this.conversationState.$conversation.subscribe((conversation: any) => {
       this.conversatinSelect = conversation;
       this.conversatinSelect?._id ? this.socketIoService.getAllMessageByConversation(this.conversatinSelect?._id).subscribe(res => {
         this.listMessage = res.reverse();
         this.scrollToBottom();
-        console.log('this.conversatinSelect', this.conversatinSelect);
+        console.log('this.listMessage', this.listMessage);
       }) : this.listMessage = [];
     });
     this.socketIoService.getMessages().subscribe(res => {
@@ -95,31 +107,16 @@ export class ContentChatComponent implements OnInit, AfterViewChecked, AfterView
     fd.append('content', this.chatForm.value.contentChat);
     fd.append('type', typeMesage);
     fd.append('description', 'description');
-    if (this.conversatinSelect?._id) {
+
+    if (!this.messageReplySelect) {
       this.socketIoService.sendMessage(fd, this.conversatinSelect?._id).subscribe(res => {
         this.chatForm.reset();
         this.file = [];
       });
     } else {
-      const conversationCreateModel = new ConversationCreateModel();
-      let arrayUserId: any[] = [];
-      console.log('this.conversatinSelect', this.conversatinSelect);
-      conversationCreateModel.conversationName = this.conversatinSelect?.conversationName;
-      this.conversatinSelect.users.map(user => {
-        if (user._id !== this.curentUser._id) {
-          arrayUserId.push(user._id);
-        }
-      })
-      conversationCreateModel.arrayUserId = arrayUserId;
-      this.conversationService.createConversation(conversationCreateModel).pipe(
-        switchMap((res: any) => {
-          return this.socketIoService.sendMessage(fd, res.conversationId);
-        })
-      ).subscribe(() => {
-        this.chatForm.reset();
-        this.file = [];
-      });
+
     }
+
   }
 
   addEmoji(event: any): void {
@@ -129,6 +126,45 @@ export class ContentChatComponent implements OnInit, AfterViewChecked, AfterView
   }
 
   reload(event: any): void {
+    this.loadData();
+  }
 
+  replyMessage(message: MessageModel): void {
+    this.messageReplySelect = message;
+    console.log('message', this.messageReplySelect);
+  }
+  cancelReply(event: any): void {
+    this.messageReplySelect = null;
+  }
+
+  recoverMessage(message: any): void {
+    const modalRef = this.modalService.open(ConfirmDiglogComponent);
+    modalRef.componentInstance.title = 'Message recovery';
+    modalRef.componentInstance.message = `Do you want to withdraw this message?`;
+    console.log('message', message);
+    modalRef.result.then((result) => {
+      if (!result) {
+        return;
+      }
+      this.socketIoService.recoverMessage(message._id).subscribe(res => {
+        console.log('res', res);
+        this.loadData();
+      }
+      );
+    })
+  }
+  forwardMessage(message: any): void {
+    console.log('message', message);
+    const modalRef = this.modalService.open(ListConversationModalComponent, {
+      size: 'md'
+    })
+    modalRef.componentInstance.action = 'my-profile';
+    modalRef.result.then((result) => {
+      result.forEach((conversationId: any) => {
+        this.socketIoService.forwardMessage(message._id, conversationId).subscribe(res => {
+          console.log('res', res);
+        });
+      });
+    })
   }
 }

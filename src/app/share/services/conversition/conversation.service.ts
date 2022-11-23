@@ -88,4 +88,14 @@ export class ConversationService {
       })
     );
   }
+
+  public deleteConversation(conversationId: string): Observable<any> {
+    const url = `${apiUrl}/${path.conversation}/${conversationId}`;
+    return this.apiService.delete(url).pipe(
+      map((httpResponse: HttpResponse<any>) => {
+        const body = httpResponse.body;
+        return body;
+      })
+    );
+  }
 }

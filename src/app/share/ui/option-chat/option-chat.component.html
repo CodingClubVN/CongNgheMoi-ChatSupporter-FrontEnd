@@ -9,11 +9,20 @@
                 <app-avatar-image-group [listUser]="conversatinSelect?.users"></app-avatar-image-group>
             </div>
             <div class="mt-3 d-flex justify-content-center">
-                <h5 class="my-auto">{{conversatinSelect?.conversationName}}</h5>
-                <i class="fa-light fa-pen-to-square my-auto ms-3 p-2 rounded-circle bg-gray-light"></i>
+                <div *ngIf="conversatinSelect?.conversationName === 'one-to-one-codingclub'">
+                    <div *ngFor="let user of conversatinSelect?.users">
+                        <h5 class="my-auto" *ngIf="user._id !== currentUser?._id">
+                            {{user?.account?.username}}</h5>
+                    </div>
+                </div>
+                <h5 class="my-auto" *ngIf="conversatinSelect?.conversationName !== 'one-to-one-codingclub'">
+                    {{conversatinSelect?.conversationName}}</h5>
+                <i class="fa-light fa-pen-to-square my-auto ms-3 p-2 rounded-circle bg-gray-light"
+                    *ngIf="conversatinSelect?.conversationName !== 'one-to-one-codingclub'"></i>
             </div>
             <div class="mt-4">
-                <div class="group-add-member-icon">
+                <div class="group-add-member-icon"
+                    *ngIf="conversatinSelect?.conversationName !== 'one-to-one-codingclub'">
                     <i class="fa-light fa-users-medical p-2 rounded-circle text-dark" (click)="openModal($event)"></i>
                     <p>Add member</p>
                 </div>
@@ -21,7 +30,7 @@
         </div>
         <div class="mt-3">
             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 bg-white align-items-center align-items-sm-start py-2"
-                id="menu">
+                id="menu" *ngIf="conversatinSelect?.conversationName !== 'one-to-one-codingclub'">
                 <li class="w-100">
                     <a href="#member" data-bs-toggle="collapse"
                         class="nav-link py-2 px-3 align-middle w-100 d-flex justify-content-between">
@@ -34,9 +43,13 @@
                     <ul class="collapse nav flex-column ms-1" id="member" data-bs-parent="#menu">
                         <li class="ps-4 py-2 w-100 d-flex justify-content-between"
                             *ngFor="let user of conversatinSelect?.users">
-                            <div>
+                            <div class="d-flex">
                                 <img src="{{user.avatarUrl}}" class="rounded-circle" width="40" height="40" alt="">
-                                <span class="ms-3 fw-bold">{{user?.account?.username}}</span>
+                                <div>
+                                    <span class="ms-3 fw-bold" [ngClass]="user._id === currentUser?._id ? 'text-danger' : ''">{{user?.account?.username}}</span>
+                                    <br />
+                                    <span class="ms-3">{{user?.account?.role}}</span>
+                                </div>
                             </div>
                             <i class="fa-light fa-trash me-4 my-auto text-danger" (click)="removeMember(user)"></i>
                         </li>
@@ -46,7 +59,7 @@
         </div>
         <div class="bg-white mt-3">
             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 bg-white align-items-center align-items-sm-start py-2"
-                id="menu">
+                id="menu" *ngIf="conversatinSelect?.conversationName !== 'one-to-one-codingclub'">
                 <li class="w-100">
                     <a href="#setting" data-bs-toggle="collapse"
                         class="nav-link py-2 px-3 align-middle w-100 d-flex justify-content-between">
@@ -56,7 +69,7 @@
                         </div>
                     </a>
                     <ul class="collapse nav flex-column ms-1" id="setting" data-bs-parent="#menu">
-                        <li class="ps-4 py-2 w-100 d-flex">
+                        <li class="ps-4 py-2 w-100 d-flex" (click)="outConversation($event)">
                             <i class="fa-light fa-right-from-bracket me-3 my-auto text-danger"></i>
                             <p class="my-auto text-danger">Leave group</p>
                         </li>

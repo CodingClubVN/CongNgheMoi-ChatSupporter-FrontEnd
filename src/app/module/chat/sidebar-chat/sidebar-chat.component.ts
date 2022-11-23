@@ -85,6 +85,12 @@ export class SidebarChatComponent implements OnInit, OnChanges, AfterViewChecked
   }
 
   searchConversation(event: any): void {
-    this.listConversations = this.conversations.filter((conversation: any) => conversation.conversationName.replace(/[\s]/g,'').toLowerCase().indexOf(event.target.value.toLowerCase()) === 0 );
+    this.listConversations = this.conversations.filter((conversation: any) => 
+      conversation.conversationName.replace(/[\s]/g,'').toLowerCase().indexOf(event.target.value.toLowerCase()) === 0 || 
+      (conversation.users.some((user: any) => 
+      user.account.username !== this.currentUser.account.username 
+      && user.account.username.replace(/[\s]/g,'').toLowerCase().indexOf(event.target.value.toLowerCase()) === 0
+      ) && conversation.users.length === 2)
+    );
   }
 }

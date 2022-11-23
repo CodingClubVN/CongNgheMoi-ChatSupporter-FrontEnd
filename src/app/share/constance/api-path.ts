@@ -24,8 +24,8 @@ export const apiPath = {
   },
   message: {
     message: 'api/messages/conversation',
-    tranfer: 'api/message/tranfer/conversation',
-    recover: 'api/message/tranfer/recover'
+    tranfer: 'api/messages/tranfer/conversation',
+    recover: 'api/messages/tranfer/recover'
   },
   friend: {
     request: 'api/friends/request',

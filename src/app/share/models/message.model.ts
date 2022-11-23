@@ -8,4 +8,5 @@ export class MessageModel {
     fromUserId!: string;
     description!: string;
     user!: UserModel;
+    status!: string;
 }
