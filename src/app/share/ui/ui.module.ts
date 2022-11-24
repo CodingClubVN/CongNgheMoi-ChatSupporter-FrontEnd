@@ -14,6 +14,7 @@ import { ListConversationModalComponent } from './modal/list-conversation-modal/
 import { ConfirmDiglogComponent } from './modal/confirm-diglog/confirm-diglog.component';
 import { OtpModalComponent } from './modal/otp-modal/otp-modal.component';
 import { EditNameConversationModalComponent } from './modal/edit-name-conversation-modal/edit-name-conversation-modal.component';
+import { CallVideoModalComponent } from './modal/call-video-modal/call-video-modal.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { EditNameConversationModalComponent } from './modal/edit-name-conversati
     ListConversationModalComponent,
     ConfirmDiglogComponent,
     OtpModalComponent,
-    EditNameConversationModalComponent
+    EditNameConversationModalComponent,
+    CallVideoModalComponent
   ],
   imports: [
     CommonModule,

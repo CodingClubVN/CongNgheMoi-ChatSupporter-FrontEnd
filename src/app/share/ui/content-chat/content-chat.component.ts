@@ -1,3 +1,4 @@
+import { CallVideoModalComponent } from './../modal/call-video-modal/call-video-modal.component';
 import { ConfirmDiglogComponent } from './../modal/confirm-diglog/confirm-diglog.component';
 import { ListConversationModalComponent } from './../modal/list-conversation-modal/list-conversation-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -54,7 +55,9 @@ export class ContentChatComponent implements OnInit, AfterViewChecked, AfterView
     this.sendMessage(event);
   }
 
-
+  callVideo(event: any) {
+    this.modalService.open(CallVideoModalComponent, { size: 'xl' });
+  }
   ngOnInit(): void {
     this.curentUser = this.tokenStorageService.getUser();
     this.loadData();
