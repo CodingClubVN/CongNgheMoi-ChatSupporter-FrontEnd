@@ -1,0 +1,20 @@
+<div class="card card-custom card-stretch gutter-b">
+    <div class="card-header border-0 text-center my-auto py-3">
+        <h5 class="text-uppercase fw-bold">Edit Name Conversation</h5>
+    </div>
+    <div class="card-body pt-0">
+        <div class="d-flex justify-content-center">
+            <app-avatar-image-group [listUser]="conversatinSelect?.users"></app-avatar-image-group>
+        </div>
+        <form [formGroup]="conversationNameForm" class="mt-5 text-center px-5">
+            <p>Do you want to rename the group. When you rename all group members will see the new name.</p>
+            <input type="text" class="form-control" formControlName="conversationName">
+        </form>
+    </div>
+    <div class="card-footer border-0 my-auto py-3">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-danger me-2" (click)="close($event)">Cancel</button>
+            <button type="submit" class="btn btn-primary" (click)="submit($event)">Submit</button>
+        </div>
+    </div>
+</div>

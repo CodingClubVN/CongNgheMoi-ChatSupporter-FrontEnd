@@ -36,7 +36,9 @@ export class SidebarChatComponent implements OnInit, OnChanges, AfterViewChecked
     this.conversations = this.listConversations;
     this.userState.$user.subscribe((res: any) => {
       if (res) {
-        const conversation = this.conversations.filter((conversation: any) => conversation.conversationName === 'one-to-one-codingclub' && conversation.users.some((user: any) => user._id !== res._id));
+        console.log('res', res);
+        const conversation = this.conversations.filter((conversation: any) => conversation.conversationName === 'one-to-one-codingclub' && conversation.users.some((user: any) => user._id === res.friend._id));
+        console.log('conversation', conversation);
         setTimeout(() => {
           conversation[0] && this.selectConversation(conversation[0]);
         }, 100);

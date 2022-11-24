@@ -18,7 +18,7 @@
                 <h5 class="my-auto" *ngIf="conversatinSelect?.conversationName !== 'one-to-one-codingclub'">
                     {{conversatinSelect?.conversationName}}</h5>
                 <i class="fa-light fa-pen-to-square my-auto ms-3 p-2 rounded-circle bg-gray-light"
-                    *ngIf="conversatinSelect?.conversationName !== 'one-to-one-codingclub'"></i>
+                    *ngIf="conversatinSelect?.conversationName !== 'one-to-one-codingclub'" (click)="editNameConversation($event)"></i>
             </div>
             <div class="mt-4">
                 <div class="group-add-member-icon"

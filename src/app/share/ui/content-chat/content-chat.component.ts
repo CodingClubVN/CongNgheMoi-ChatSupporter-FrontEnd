@@ -66,7 +66,6 @@ export class ContentChatComponent implements OnInit, AfterViewChecked, AfterView
       this.conversatinSelect?._id ? this.socketIoService.getAllMessageByConversation(this.conversatinSelect?._id).subscribe(res => {
         this.listMessage = res.reverse();
         this.scrollToBottom();
-        console.log('this.listMessage', this.listMessage);
       }) : this.listMessage = [];
     });
     this.socketIoService.getMessages().subscribe(res => {
@@ -135,7 +134,6 @@ export class ContentChatComponent implements OnInit, AfterViewChecked, AfterView
 
   replyMessage(message: MessageModel): void {
     this.messageReplySelect = message;
-    console.log('message', this.messageReplySelect);
   }
   cancelReply(event: any): void {
     this.messageReplySelect = null;

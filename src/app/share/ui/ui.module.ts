@@ -13,6 +13,7 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { ListConversationModalComponent } from './modal/list-conversation-modal/list-conversation-modal.component';
 import { ConfirmDiglogComponent } from './modal/confirm-diglog/confirm-diglog.component';
 import { OtpModalComponent } from './modal/otp-modal/otp-modal.component';
+import { EditNameConversationModalComponent } from './modal/edit-name-conversation-modal/edit-name-conversation-modal.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { OtpModalComponent } from './modal/otp-modal/otp-modal.component';
     ListRequestComponent,
     ListConversationModalComponent,
     ConfirmDiglogComponent,
-    OtpModalComponent
+    OtpModalComponent,
+    EditNameConversationModalComponent
   ],
   imports: [
     CommonModule,

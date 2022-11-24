@@ -59,9 +59,12 @@ export class ConversationService {
     );
   }
 
-  public updateConversationName(conversationName: string, conversationId: string): Observable<any> {
+  public updateConversationName(conversationId: string, conversationName: string): Observable<any> {
+    const data = {
+      conversationName
+    }
     const url = `${apiUrl}/${path.conversation}/${conversationId}`;
-    return this.apiService.put(url, conversationName).pipe(
+    return this.apiService.put(url, data).pipe(
       map((httpResponse: HttpResponse<any>) => {
         const body = httpResponse.body;
         return body;

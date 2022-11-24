@@ -30,7 +30,6 @@ export class RegisterComponent implements OnInit {
   }
 
   register(event: any) {
-    this.formRegister
     const account = new AccountModel();
     account.username = this.formRegister.getRawValue().username;
     account.password = this.formRegister.getRawValue().password;
