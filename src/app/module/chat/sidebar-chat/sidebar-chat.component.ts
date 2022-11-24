@@ -34,20 +34,12 @@ export class SidebarChatComponent implements OnInit, OnChanges, AfterViewChecked
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.conversations = this.listConversations;
-    console.log(this.conversations);
-    console.log(this.currentUser);
     this.userState.$user.subscribe((res: any) => {
       if (res) {
-        const listUser = [];
-        listUser.push(res);
-        listUser.push(this.tokenStorageService.getUser());
-        const conversation = new ConversationModel();
-        conversation.conversationName = res.fullname;
-        conversation.users = listUser;
-        if (this.listConversations[0]?._id !== conversation?._id) {
-          conversation && this.listConversations.unshift(conversation);
-        }
-        this.selectConversation(conversation);
+        const conversation = this.conversations.filter((conversation: any) => conversation.conversationName === 'one-to-one-codingclub' && conversation.users.some((user: any) => user._id !== res._id));
+        setTimeout(() => {
+          conversation[0] && this.selectConversation(conversation[0]);
+        }, 100);
       }
     });
     if (this.listConversations) {
@@ -85,6 +77,7 @@ export class SidebarChatComponent implements OnInit, OnChanges, AfterViewChecked
   }
 
   selectConversation(conversation: ConversationModel) {
+    console.log('selectConversation', conversation);
     this.conversationState.setConversation(conversation);
     conversation?._id && this.socketIoService.selectRoom(conversation?._id);
     this.conversationSelectId = conversation?._id;
