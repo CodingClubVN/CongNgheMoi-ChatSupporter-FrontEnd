@@ -40,7 +40,7 @@ export class UserService {
 
   public updateUser(userId: string, data: any): Observable<UserModel> {
     const pathUrl = `${apiUrl}/${path.user}/${userId}`;
-    return this.apiService.put(pathUrl, data).pipe(
+    return this.apiService.putFormdata(pathUrl, data).pipe(
       map((httpResponse: HttpResponse<any>) => {
         const body = httpResponse.body;
         return body;

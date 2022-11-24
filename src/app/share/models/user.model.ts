@@ -9,7 +9,7 @@ export class UserModel {
     avatarUrl!: string;
     phone!: string;
     about!: string;
-    yearOfBirth!: number;
+    yearOrBirth!: number;
     updatedAt!: Date;
     createdAt!: Date;
     account!: AccountModel;

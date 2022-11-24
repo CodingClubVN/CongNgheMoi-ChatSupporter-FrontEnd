@@ -1,3 +1,4 @@
+import { FriendService } from './../../share/services/friend/friend.service';
 import { ConversationState } from './../../share/state/conversation.state';
 import { UserService } from './../../share/services/user/user.service';
 import { UserState } from './../../share/state/user.state';
@@ -23,7 +24,8 @@ export class ChatComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     private userService: UserService,
     private socketIoService: SocketIoService,
-    private conversationState: ConversationState) { }
+    private conversationState: ConversationState,
+    private friendService: FriendService) { }
 
   ngOnInit(): void {
     this.listenService();
@@ -48,7 +50,7 @@ export class ChatComponent implements OnInit {
         return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
       });
     });
-    this.userService.getAllUser().subscribe(users => {
+    this.friendService.getAllFriends().subscribe(users => {
       this.listFriend = users;
     });
   }

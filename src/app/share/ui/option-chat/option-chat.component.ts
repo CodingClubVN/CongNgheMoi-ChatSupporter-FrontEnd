@@ -25,8 +25,8 @@ export class OptionChatComponent implements OnInit {
   ngOnInit(): void {
     this.conversationState.$conversation.subscribe((conversation: any) => {
       this.conversationService.getConversationById(conversation?._id).subscribe(res => {
+        this.conversation = res;
         this.conversatinSelect = res;
-        console.log(this.conversatinSelect);
       })
     })
   }

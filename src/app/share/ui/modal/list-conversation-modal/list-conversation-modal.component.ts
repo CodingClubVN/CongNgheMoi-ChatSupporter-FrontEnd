@@ -12,18 +12,26 @@ export class ListConversationModalComponent implements OnInit {
   listConversation: any = [];
   currentUser = this.tokenStorageService.getUser();
   listConversationSelect: any = [];
+  conversations: any = [];
   constructor(private conversationService: ConversationService,
               private tokenStorageService: TokenStorageService,
               private modal: NgbActiveModal) { }
 
   ngOnInit(): void {
     this.conversationService.getALLConversations().subscribe(conversations => {
+      this.conversations = conversations;
       this.listConversation = conversations;
       console.log(this.listConversation);
     });
   }
   searchUser(event: any): void {
-
+    this.listConversation = this.conversations.filter((conversation: any) => 
+    conversation.conversationName.replace(/[\s]/g,'').toLowerCase().indexOf(event.target.value.toLowerCase()) === 0 || 
+    (conversation.users.some((user: any) => 
+    user.account.username !== this.currentUser.account.username 
+    && user.account.username.replace(/[\s]/g,'').toLowerCase().indexOf(event.target.value.toLowerCase()) === 0
+    ) && conversation.users.length === 2)
+  );
   }
 
   getValueCheckbox(event: any) {

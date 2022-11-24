@@ -11,7 +11,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./add-member-modal.component.scss']
 })
 export class AddMemberModalComponent implements OnInit, OnChanges {
-  @Input() listFriend: UserModel[] = [];
+  @Input() listFriend: any[] = [];
   @Input() action!: string;
   @Input() conversation!: any;
   listUserIdSelected: string[] = [];
@@ -22,8 +22,10 @@ export class AddMemberModalComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.users = this.listFriend;
+    console.log('this.listFriend', this.listFriend);
     if (this.action === 'add-member') {
-      this.listFriend = this.listFriend.filter(user => !this.conversation.users.some((member: any) => member._id === user._id));
+      console.log('this.conversation', this.conversation);
+      this.listFriend = this.listFriend.filter(user => !this.conversation?.users.some((member: any) => member._id === user._id));
     }
   }
 

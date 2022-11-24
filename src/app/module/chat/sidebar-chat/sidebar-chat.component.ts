@@ -63,6 +63,12 @@ export class SidebarChatComponent implements OnInit, OnChanges, AfterViewChecked
         this.listConversations[0] && this.selectConversation(this.listConversations[0]);
       }
     });
+    this.conversationState.$isDeleteConversation.subscribe((res: any) => {
+      if (res) {
+        this.listConversations = this.listConversations.filter((conversation: any) => conversation._id !== res);
+        this.listConversations[0] && this.selectConversation(this.listConversations[0]);
+      }
+    });
   }
 
   ngOnInit(): void {

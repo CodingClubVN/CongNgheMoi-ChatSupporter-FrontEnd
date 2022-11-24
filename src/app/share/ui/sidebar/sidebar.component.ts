@@ -22,6 +22,7 @@ export class SidebarComponent implements OnInit{
 
   ngOnInit(): void {
     this.me = this.tokenStorageService.getUser();
+    console.log(this.me);
     if (this.router.url.includes('chat')){
       this.status = 'chat';
     } else if (this.router.url.includes('list-user')) {
@@ -43,9 +44,14 @@ export class SidebarComponent implements OnInit{
     modalRef.result.then((result) => {
       console.log(result);
       console.log(this.me);
-      this.me.email = result.email;
-      this.me.phone = result.phone;
-      this.userService.updateUser(this.me?._id, this.me).subscribe((res: any) => {
+      const formdata: FormData = new FormData();
+      formdata.append('avatar', result.avatar);
+      formdata.append('fullname', result.form.fullname);
+      formdata.append('phone', result.form.phone);
+      formdata.append('about', result.form.about);
+      formdata.append('yearOrBirth', result.form.yearOfBirth);
+
+      this.userService.updateUser(this.me?._id, formdata).subscribe((res: any) => {
         this.me = res;
         this.tokenStorageService.addUser(this.me);
       });

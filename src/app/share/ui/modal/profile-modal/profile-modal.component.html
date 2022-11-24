@@ -5,11 +5,17 @@
         </div>
         <div class="card-body pt-0 text-center">
             <div class="my-3 mx-auto d-flex align-items-center justify-content-center">
-                <img class="rounded-circle" src="{{user.avatarUrl}}" width="100" height="100" alt="">
+                <label for="avatar">
+                    <img class="rounded-circle" [src]="url || user.avatarUrl" width="100" height="100" alt="">
+
+                </label>
+                <input type="file" id="avatar" class="d-none" (change)="uploadAvatar($event)">
             </div>
-            <h4>{{user.fullname}}</h4>
+            <div class="d-flex align-items-center justify-content-center">
+                <h4 class="my-auto">{{user.fullname}}</h4>
+            </div>
             <div class="text-start mx-5 mt-4">
-                <h5>Infomation</h5>
+                <!-- <h5>Infomation</h5> -->
                 <table class="mt-4">
                     <tr class="py-3">
                         <td class="col-5 py-2">
@@ -17,8 +23,17 @@
                         </td>
                         <td>
                             <span class="ms-2">
-                                <input type="text" class="form-control" formControlName="username"
-                                    [readonly]="isDisabled">
+                                <input type="text" class="form-control" formControlName="username" [readonly]="true">
+                            </span>
+                        </td>
+                    </tr>
+                    <tr class="py-3">
+                        <td class="col-5 py-2">
+                            <Span class="fw-bold">Fullname:</Span>
+                        </td>
+                        <td>
+                            <span class="ms-2">
+                                <input type="text" class="form-control" formControlName="fullname" [readonly]="isDisabled">
                             </span>
                         </td>
                     </tr>
@@ -39,6 +54,26 @@
                         <td>
                             <span class="ms-2">
                                 <input type="text" class="form-control" formControlName="phone" [readonly]="isDisabled">
+                            </span>
+                        </td>
+                    </tr>
+                    <tr class="col-5">
+                        <td class="py-2">
+                            <Span class="fw-bold">About:</Span>
+                        </td>
+                        <td>
+                            <span class="ms-2">
+                                <input type="text" class="form-control" formControlName="about" [readonly]="isDisabled">
+                            </span>
+                        </td>
+                    </tr>
+                    <tr class="col-5">
+                        <td class="py-2">
+                            <Span class="fw-bold">Year of birth:</Span>
+                        </td>
+                        <td>
+                            <span class="ms-2">
+                                <input type="text" class="form-control" formControlName="yearOfBirth" [readonly]="isDisabled">
                             </span>
                         </td>
                     </tr>

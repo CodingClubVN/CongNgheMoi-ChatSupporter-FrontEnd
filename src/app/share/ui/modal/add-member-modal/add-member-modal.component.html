@@ -22,15 +22,15 @@
           <div class="">
             <h6>List friend</h6>
             <ul class="list-friend">
-                <li *ngFor="let friend of listFriend" class="d-flex my-3">
+                <li *ngFor="let user of listFriend" class="d-flex my-3">
                     <div class="form-check my-auto">
-                        <input class="form-check-input rounded-circle border-3" type="checkbox" value="{{friend._id}}" id="{{friend._id}}" (change)="getValueCheckbox($event)">
+                        <input class="form-check-input rounded-circle border-3" type="checkbox" value="{{user.friend?._id}}" id="{{user.friend?._id}}" (change)="getValueCheckbox($event)">
                     </div>
                     <div class="h-100">
-                        <img class="rounded-circle" src="{{friend.avatarUrl}}" width="50" height="50" alt="">
+                        <img class="rounded-circle" src="{{user?.friend?.avatarUrl}}" width="50" height="50" alt="">
                     </div>
                     <span class="my-auto ms-3">
-                        {{friend.account.username}}
+                        {{user.friend?.account?.username}}
                     </span>
                 </li>
             </ul>

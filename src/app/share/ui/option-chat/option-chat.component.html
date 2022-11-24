@@ -71,7 +71,12 @@
                     <ul class="collapse nav flex-column ms-1" id="setting" data-bs-parent="#menu">
                         <li class="ps-4 py-2 w-100 d-flex" (click)="outConversation($event)">
                             <i class="fa-light fa-right-from-bracket me-3 my-auto text-danger"></i>
-                            <p class="my-auto text-danger">Leave group</p>
+                            <div>
+                                <div *ngFor="let user of conversatinSelect?.users">
+                                    <p class="my-auto text-danger" *ngIf="user._id === currentUser?._id && user?.account?.role === 'owner-admin'">Remove group</p>
+                                    <p class="my-auto text-danger" *ngIf="user._id === currentUser?._id && user?.account?.role !== 'owner-admin'">Leave group</p>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </li>

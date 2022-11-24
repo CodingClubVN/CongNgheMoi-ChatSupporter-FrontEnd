@@ -187,6 +187,19 @@ export class ApiService {
       );
   }
 
+  public putFormdata(path: string, body?: any, customHeader?: any): Observable<any> {
+    return this.httpClient.put(
+      path, body,
+      {
+        headers: this.setHeadersFormData(customHeader),
+        withCredentials: false,
+        observe: 'response'
+      })
+      .pipe(
+        catchError(this.errorHandler)
+      );
+  }
+
 
   public delete(path: string): Observable<any> {
     return this.httpClient.delete(
