@@ -98,4 +98,24 @@ export class ConversationService {
       })
     );
   }
+
+  leaveConversation(conversationId: string): Observable<any> {
+    const url = `${apiUrl}/${path.conversation}/${conversationId}/leave`;
+    return this.apiService.post(url, null).pipe(
+      map((httpResponse: HttpResponse<any>) => {
+        const body = httpResponse.body;
+        return body;
+      })
+    );
+  }
+
+  getFilesInConversation(conversationId: string): Observable<any> {
+    const url = `${apiUrl}/api/messages/files/conversation/${conversationId}`;
+    return this.apiService.get(url).pipe(
+      map((httpResponse: HttpResponse<any>) => {
+        const body = httpResponse.body;
+        return body;
+      })
+    );
+  }
 }

@@ -12,6 +12,7 @@ import { ListRequestComponent } from './modal/list-request/list-request.componen
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { ListConversationModalComponent } from './modal/list-conversation-modal/list-conversation-modal.component';
 import { ConfirmDiglogComponent } from './modal/confirm-diglog/confirm-diglog.component';
+import { OtpModalComponent } from './modal/otp-modal/otp-modal.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ConfirmDiglogComponent } from './modal/confirm-diglog/confirm-diglog.co
     ProfileModalComponent,
     ListRequestComponent,
     ListConversationModalComponent,
-    ConfirmDiglogComponent
+    ConfirmDiglogComponent,
+    OtpModalComponent
   ],
   imports: [
     CommonModule,

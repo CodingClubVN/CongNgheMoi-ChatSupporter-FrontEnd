@@ -17,6 +17,9 @@ export class OptionChatComponent implements OnInit {
   @Output() newItemEvent = new EventEmitter<boolean>(false);
   conversation: any = null
   currentUser = this.tokenStorageService.getUser();
+  listImages: any = [];
+  listFiles: any = [];
+  listVideos: any = [];
   constructor(private modalService: NgbModal,
     private conversationService: ConversationService,
     private conversationState: ConversationState,
@@ -29,6 +32,12 @@ export class OptionChatComponent implements OnInit {
         this.conversatinSelect = res;
       })
     })
+    this.conversationService.getFilesInConversation(this.conversatinSelect._id).subscribe(res => {
+      console.log(res);
+      this.listImages = res.images;
+      this.listFiles = res.files;
+      this.listVideos = res.videos;
+    });
   }
 
   reloadData(id: string) {
@@ -57,8 +66,17 @@ export class OptionChatComponent implements OnInit {
   }
 
   outConversation(event: any): void {
-    this.conversationService.deleteConversation(this.conversatinSelect._id).subscribe((res: any) => {
-      this.conversationState.deleteConversationStatus(true);
-    })
+    console.log(this.conversatinSelect);
+    const isOwner = this.conversatinSelect.users.some((res: any) => res.account.role === 'owner-admin' && res.account._id !== this.currentUser._id);
+    if (isOwner) {
+      this.conversationService.deleteConversation(this.conversatinSelect._id).subscribe((res: any) => {
+        this.conversationState.deleteConversationStatus(true);
+      })
+    } else {
+      this.conversationService.leaveConversation(this.conversatinSelect._id).subscribe((res: any) => {
+        this.conversationState.deleteConversationStatus(true);
+      })
+    }
+
   }
 }

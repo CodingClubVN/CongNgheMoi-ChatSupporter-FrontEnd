@@ -1,3 +1,4 @@
+import { OtpModalComponent } from './../../../share/ui/modal/otp-modal/otp-modal.component';
 import { finalize } from 'rxjs/operators';
 import { UserService } from './../../../share/services/user/user.service';
 import { TokenStorageService } from './../../../share/services/token-storage/token-storage.service';
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/share/services/auth/auth.service';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +20,8 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService,
     private tokenStorageService: TokenStorageService,
     private router: Router,
-    private userSerivce: UserService) { }
+    private userSerivce: UserService,
+    private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
@@ -32,6 +35,9 @@ export class LoginComponent implements OnInit {
     const account = new AccountModel();
     account.username = this.loginForm.getRawValue().username;
     account.password = this.loginForm.getRawValue().password;
+    // this.modalService.open(OtpModalComponent, {
+    //   size: 'lg'
+    // })
     this.authService.login(account).subscribe((data: TokenModel) => {
       this.tokenStorageService.saveToken(data.token);
       this.loginForm.reset();
