@@ -154,3 +154,9 @@
         font-weight: bold;
     }
 }
+.text-one-line-reply{
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: fit-content;
+}

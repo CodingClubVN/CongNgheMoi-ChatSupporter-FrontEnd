@@ -52,8 +52,11 @@ export class FriendService {
   }
 
   rejectRequestFriend(friendRequestId: string): Observable<any> {
+    const data = {
+      fromUserId: friendRequestId
+    }
     const url = `${apiUrl}/${path.reject}`;
-    return this.apiSerivce.put(url, friendRequestId).pipe(
+    return this.apiSerivce.post(url, data).pipe(
       map((httpResponse: HttpResponse<any>) => {
         const body = httpResponse.body;
         return body;

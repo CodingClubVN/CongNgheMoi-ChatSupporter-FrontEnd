@@ -41,14 +41,17 @@
                                 Message has been recovered
                             </i>
                         </div>
-                        <div *ngIf="message?.status !== 'recovered'" class="w-100 d-flex justify-content-end">
+                        <div *ngIf="message?.status !== 'recovered'" class="w-100 d-flex justify-content-end" style="position: relative;" [ngClass]="message.status === 'answer' ? 'mt-5' : ''">
                             <div class="action-message d-flex align-items-end">
                                 <i class="fa-regular fa-trash" (click)="recoverMessage(message)"></i>
                                 <i class="fa-regular fa-comment-dots ms-2" (click)="replyMessage(message)"></i>
                                 <i class="fa-regular fa-share-all ms-2" (click)="forwardMessage(message)"></i>
                             </div>
-                            <div class="message-content message-item-curent-user px-4 py-2" *ngIf="message.type === 'text'">
-                                <p>{{message.content[0]}}</p>
+                            <div class="bg-black py-1 px-2 rounded-2 text-one-line-reply" style="opacity: 0.7; height: 40px; position: absolute; right: 2%; top: -35px; max-width: 60%;" *ngIf="message.status === 'answer'">
+                                <i class="text-secondary ">{{message.description}}</i>
+                            </div>
+                            <div class="message-content message-item-curent-user px-4 py-2" *ngIf="message.type === 'text'" style="z-index: 1;">
+                                <span>{{message.content[0]}}</span>
                             </div>
                             <div *ngIf="message.type === 'image'" class="message-content row w-25"
                                 [ngClass]="message?.content?.length !== 1 ? 'justify-content-end' : 'justify-content-start'">
@@ -87,7 +90,7 @@
                         </div>
                     </div>
                     <div *ngIf="curentUser._id !== message.fromUserId && message.type !== 'notification'"
-                        class="message-content mt-3 d-flex">
+                        class="message-content mt-3 d-flex" style="position: relative;" [ngClass]="message.status === 'answer' ? 'mt-5' : ''">
                         <div class="avatar-chat-item">
                             <img class="rounded-circle mt-3"
                                 *ngIf="listMessage[i + 1]?.fromUserId !== message?.fromUserId && message.type !== 'notification'"
@@ -102,7 +105,11 @@
                             </i>
                         </div>
                         <div *ngIf="message?.status !== 'recovered'" class="w-100 d-flex justify-content-start">
-                            <div class="message-content message-item-friend px-4 py-2 ms-2" *ngIf="message.type === 'text'">
+                            <div class="bg-black py-1 px-2 rounded-2 text-one-line-reply" style="opacity: 0.7; height: 40px; position: absolute; left: 5%; top: -35px; max-width: 60%;" *ngIf="message.status === 'answer'">
+                                <i class="text-secondary ">{{message.description}}</i>
+                                <i class="text-secondary ">message.description</i>
+                            </div>
+                            <div class="message-content message-item-friend px-4 py-2 ms-2" *ngIf="message.type === 'text'" style="z-index: 1;">
                                 <b class="m-0"
                                     *ngIf="listMessage[i - 1]?.fromUserId !== message?.fromUserId">{{message.user.account.username}}</b>
                                 <p>{{message.content[0]}}</p>

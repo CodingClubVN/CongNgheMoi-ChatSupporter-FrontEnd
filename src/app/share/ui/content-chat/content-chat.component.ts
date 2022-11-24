@@ -114,9 +114,13 @@ export class ContentChatComponent implements OnInit, AfterViewChecked, AfterView
         this.file = [];
       });
     } else {
-
+      fd.append('messageAnswarId', this.messageReplySelect?._id);
+      this.socketIoService.sendMessage(fd, this.conversatinSelect?._id).subscribe(res => {
+        this.chatForm.reset();
+        this.file = [];
+        this.messageReplySelect = null;
+      });
     }
-
   }
 
   addEmoji(event: any): void {
@@ -141,20 +145,17 @@ export class ContentChatComponent implements OnInit, AfterViewChecked, AfterView
     const modalRef = this.modalService.open(ConfirmDiglogComponent);
     modalRef.componentInstance.title = 'Message recovery';
     modalRef.componentInstance.message = `Do you want to withdraw this message?`;
-    console.log('message', message);
     modalRef.result.then((result) => {
       if (!result) {
         return;
       }
       this.socketIoService.recoverMessage(message._id).subscribe(res => {
-        console.log('res', res);
         this.loadData();
       }
       );
     })
   }
   forwardMessage(message: any): void {
-    console.log('message', message);
     const modalRef = this.modalService.open(ListConversationModalComponent, {
       size: 'md'
     })

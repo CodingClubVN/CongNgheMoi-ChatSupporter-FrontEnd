@@ -18,8 +18,8 @@ export class UserService {
 
   constructor(private apiService: ApiService) { }
 
-  public getAllUser(): Observable<UserModel[]> {
-    const pathUrl = `${apiUrl}/${path.user}`;
+  public getAllUser(): Observable<any[]> {
+    const pathUrl = `${apiUrl}/${path.user}?perPage=100`;
     return this.apiService.get(pathUrl).pipe(
       map((httpResponse: HttpResponse<any>) => {
         const body = httpResponse.body;

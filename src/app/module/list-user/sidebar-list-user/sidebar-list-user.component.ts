@@ -40,7 +40,7 @@ export class SidebarListUserComponent implements OnInit {
       this.listRequestFriends = reuquests;
     })
   }
-  
+
   selectFriend(user: UserModel): void{
     this.userState.setStateUser(user);
     this.router.navigate(['/home/chat']);
@@ -61,6 +61,9 @@ export class SidebarListUserComponent implements OnInit {
   }
 
   rejectRequest(user: any): void {
+    this.friendService.rejectRequestFriend(user.fromUser._id).subscribe((res: any) => {
+      this.listenService();
+    });
     console.log('reject', user);
   }
 }

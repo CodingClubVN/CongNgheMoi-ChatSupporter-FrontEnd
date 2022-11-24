@@ -18,6 +18,7 @@ export class SuggestionUserComponent implements OnInit {
 
   listenSerivce(): void {
     this.userService.getAllUser().subscribe(users => {
+      console.log('users', users);
       this.listUsers = users.filter(user => user?.friendRequestStatus === 'none');
     });
   }
