@@ -43,13 +43,11 @@ export class RegisterComponent implements OnInit {
     user.phone = this.formRegister.getRawValue().phone;
     user.account = account;
     console.log(user);
-    this.authServive.senOTP(user.fullname, user.email).subscribe(res => {
-      console.log(res);
-      const modalRef = this.modalService.open(OtpModalComponent, {
-        size: 'lg'
-      });
-      modalRef.componentInstance.user = user;
-      modalRef.componentInstance.account = account;
-    })
+    this.authServive.senOTP(user.fullname, user.email).subscribe(res => {});
+    const modalRef = this.modalService.open(OtpModalComponent, {
+      size: 'lg'
+    });
+    modalRef.componentInstance.user = user;
+    modalRef.componentInstance.account = account;
   }
 }
