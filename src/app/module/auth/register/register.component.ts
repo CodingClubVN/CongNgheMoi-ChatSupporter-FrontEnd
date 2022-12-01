@@ -1,9 +1,12 @@
+import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from './../../../share/services/auth/auth.service';
 import { AccountModel } from './../../../share/models/account.model';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserModel } from 'src/app/share/models/user.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { OtpModalComponent } from 'src/app/share/ui/modal/otp-modal/otp-modal.component';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +16,8 @@ import { UserModel } from 'src/app/share/models/user.model';
 export class RegisterComponent implements OnInit {
   formRegister = this.initFormRegister();
   constructor(private authServive: AuthService,
-              private router: Router) { }
+    private router: Router,
+    private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
@@ -38,9 +42,14 @@ export class RegisterComponent implements OnInit {
     user.email = this.formRegister.getRawValue().email;
     user.phone = this.formRegister.getRawValue().phone;
     user.account = account;
-    this.authServive.register(user).subscribe((data: any) => {
-      this.formRegister.reset();
-      this.router.navigate(['/auth/login']);
-    });
+    console.log(user);
+    this.authServive.senOTP(user.fullname, user.email).subscribe(res => {
+      console.log(res);
+      const modalRef = this.modalService.open(OtpModalComponent, {
+        size: 'lg'
+      });
+      modalRef.componentInstance.user = user;
+      modalRef.componentInstance.account = account;
+    })
   }
 }

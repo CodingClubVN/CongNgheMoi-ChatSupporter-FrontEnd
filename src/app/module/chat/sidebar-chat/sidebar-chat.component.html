@@ -47,10 +47,14 @@
                                     <p class="content-text-card m-0 text-secondary text-one-line">
                                         {{conversation?.lastMessage?.content}}
                                     </p>
-                                    <div
-                                        class="message-unsend-number backgroup-linear-gradient rounded-circle text-center">
-                                        <p></p>
+                                    <!-- <div *ngFor="let user of conversation?.readStatus" >
+                                        <div class="message-unsend-number backgroup-linear-gradient rounded-circle text-center" *ngIf="user !== currentUser._id">
+                                            <p></p>
+                                        </div>
                                     </div>
+                                    <div class="message-unsend-number backgroup-linear-gradient rounded-circle text-center" *ngIf="conversation?.readStatus?.length === 0">
+                                        <p></p>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>

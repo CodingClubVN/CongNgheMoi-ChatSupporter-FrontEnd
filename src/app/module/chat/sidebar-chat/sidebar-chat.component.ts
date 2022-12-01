@@ -25,11 +25,13 @@ export class SidebarChatComponent implements OnInit, OnChanges, AfterViewChecked
   @ViewChild('scrollChat') scrollChat!: ElementRef;
   conversations: any;
   currentUser = this.tokenStorageService.getUser();
+  isMarkRead = false;
   constructor(private modalService: NgbModal,
     private conversationState: ConversationState,
     private socketIoService: SocketIoService,
     private userState: UserState,
-    private tokenStorageService: TokenStorageService) { }
+    private tokenStorageService: TokenStorageService,
+    private conversationService: ConversationService) { }
   ngAfterViewChecked(): void {
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -83,11 +85,24 @@ export class SidebarChatComponent implements OnInit, OnChanges, AfterViewChecked
     this.conversationState.setConversation(conversation);
     conversation?._id && this.socketIoService.selectRoom(conversation?._id);
     this.conversationSelectId = conversation?._id;
+    // conversation?.readStatus.some(userId => console.log(userId))
+    // console.log('true/flase', conversation?.readStatus.some(userId => console.log(userId)));
+    // console.log(this.currentUser._id);
+    // (conversation?.readStatus.some(userId => userId !== this.currentUser._id) || conversation?.readStatus.length === 0) && this.conversationService.markRead(conversation?._id, [this.currentUser._id]).pipe(first()).subscribe((res: any) => {
+    //   this.listConversations.forEach((conversationOld: any) => {
+    //     if (conversationOld._id === conversation._id) {
+    //       conversationOld?.readStatus.some((userId: string) => console.log(userId));
+    //       console.log(conversationOld?.readStatus.some((userId: string) => userId !== this.currentUser._id));
+    //       (conversationOld?.readStatus.some((userId: string) => userId !== this.currentUser._id) || conversationOld?.readStatus.length === 0) && conversationOld.readStatus.push(this.currentUser._id);
+    //       console.log('conversationOld', conversationOld);
+    //     }
+    //   });
+    // });
   }
 
   searchConversation(event: any): void {
     this.listConversations = this.conversations.filter((conversation: any) => 
-      conversation.conversationName.replace(/[\s]/g,'').toLowerCase().indexOf(event.target.value.toLowerCase()) === 0 || 
+      conversation.conversationName.replace(/[\s]/g,'').toLowerCase().indexOf(event.target.value.toLowerCase()) === 0 ||
       (conversation.users.some((user: any) => 
       user.account.username !== this.currentUser.account.username 
       && user.account.username.replace(/[\s]/g,'').toLowerCase().indexOf(event.target.value.toLowerCase()) === 0

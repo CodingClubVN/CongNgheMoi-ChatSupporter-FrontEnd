@@ -8,13 +8,13 @@
             To increase the level of security. We have sent you an OTP in your email address, please check and verify
             it.
         </p>
-        <form class="d-flex justify-content-center mt-4">
-            <input type="text" name="" id="" class="input-otp-item">
-            <input type="text" name="" id="" class="input-otp-item">
-            <input type="text" name="" id="" class="input-otp-item">
-            <input type="text" name="" id="" class="input-otp-item">
-            <input type="text" name="" id="" class="input-otp-item">
-            <input type="text" name="" id="" class="input-otp-item">
+        <form [formGroup]="formOTP" class="d-flex justify-content-center mt-4">
+            <input type="text" name="" id="number1" (keyup)="nextValue('number1')" class="input-otp-item" maxlength="1" formControlName="number1">
+            <input type="text" name="" id="number2" (keyup)="nextValue('number2')" class="input-otp-item" maxlength="1" formControlName="number2">
+            <input type="text" name="" id="number3" (keyup)="nextValue('number3')" class="input-otp-item" maxlength="1" formControlName="number3">
+            <input type="text" name="" id="number4" (keyup)="nextValue('number4')" class="input-otp-item" maxlength="1" formControlName="number4">
+            <input type="text" name="" id="number5" (keyup)="nextValue('number5')" class="input-otp-item" maxlength="1" formControlName="number5">
+            <input type="text" name="" id="number6" (keyup)="nextValue('number6')" class="input-otp-item" maxlength="1" formControlName="number6">
         </form>
         <p class="text-secondary mt-4">
             OTP will expire after 1 minute

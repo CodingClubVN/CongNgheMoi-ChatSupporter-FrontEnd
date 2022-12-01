@@ -72,9 +72,9 @@ export class ConversationService {
     );
   }
 
-  public markRead(conversationId: string): Observable<any> {
+  public markRead(conversationId: string, arrayUserId: string[]): Observable<any> {
     const url = `${apiUrl}/${path.conversation}/${conversationId}/mark-read`;
-    return this.apiService.put(url, conversationId).pipe(
+    return this.apiService.put(url, {arrayUserId}).pipe(
       map((httpResponse: HttpResponse<any>) => {
         const body = httpResponse.body;
         return body;

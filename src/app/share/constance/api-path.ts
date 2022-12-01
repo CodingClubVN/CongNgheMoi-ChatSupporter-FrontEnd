@@ -10,7 +10,9 @@ export const apiPath = {
     login: 'api/auth/login',
     register: 'api/auth/register',
     refreshToken: 'api/auth/refreshToken',
-    changePassword: 'api/auth/changePassword'
+    changePassword: 'api/auth/changePassword',
+    sendOTP: 'api/auth/send-otp',
+    verifyOTP: 'api/auth/validate-otp',
   },
   order: {
     order: 'api/orders',

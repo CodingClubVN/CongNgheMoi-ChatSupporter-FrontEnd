@@ -1,3 +1,6 @@
+import { AuthService } from 'src/app/share/services/auth/auth.service';
+import { TokenStorageService } from './../services/token-storage/token-storage.service';
+import { UserService } from './../services/user/user.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContentChatComponent } from './content-chat/content-chat.component';
 import { RouterModule } from '@angular/router';
@@ -41,6 +44,11 @@ import { CallVideoModalComponent } from './modal/call-video-modal/call-video-mod
     SidebarComponent,
     ContentChatComponent,
     AvatarImageGroupComponent
+  ],
+  providers: [
+    UserService,
+    TokenStorageService,
+    AuthService
   ]
 })
 export class UiModule { }

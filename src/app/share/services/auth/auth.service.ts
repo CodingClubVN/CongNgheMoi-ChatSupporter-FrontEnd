@@ -43,6 +43,28 @@ export class AuthService {
       );
   }
 
+  senOTP(fullname: string, email: string): Observable<any> {
+    const url = `${apiUrl}/${path.sendOTP}`;
+    return this.apiService.postNoHeader(url, {fullname, email})
+      .pipe(
+        map((httpResponse: HttpResponse<any>) => {
+          const body = httpResponse.body;
+          return body;
+        })
+      );
+  }
+
+  verifyOTP(otp: string, email: string): Observable<any> {
+    const url = `${apiUrl}/${path.verifyOTP}`;
+    return this.apiService.postNoHeader(url, {otp, email})
+      .pipe(
+        map((httpResponse: HttpResponse<any>) => {
+          const body = httpResponse.body;
+          return body;
+        })
+      );
+  }
+
   checkLogin(): boolean {
     return this.tokenStorageService.getToken() ? true : false;
   }
