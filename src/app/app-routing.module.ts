@@ -16,6 +16,10 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () => import('./module/home-chat/home-chat.module').then(m => m.HomeChatModule),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'welcome',
+    loadChildren: () => import('./module/welcome/welcome.module').then(m => m.WelcomeModule)
   }
 ];
 

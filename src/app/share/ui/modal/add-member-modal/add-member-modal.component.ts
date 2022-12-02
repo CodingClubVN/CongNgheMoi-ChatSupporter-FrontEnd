@@ -37,7 +37,10 @@ export class AddMemberModalComponent implements OnInit, OnChanges {
     });
   }
   searchUser(event: any): void {
-    this.listFriend = this.users.filter((user: any) => user.account?.username.toLowerCase().includes(event.target.value.toLowerCase()));
+    console.log('event', this.users);
+    console.log('event', event.target.value);
+    this.listFriend = this.users.filter((user: any) => user?.friend?.account?.username.toLowerCase().includes(event.target.value.toLowerCase()));
+    console.log('this.listFriend', this.listFriend);
   }
 
   getValueCheckbox(event: any) {
@@ -50,9 +53,9 @@ export class AddMemberModalComponent implements OnInit, OnChanges {
 
   onSubmit(event: any) {
     console.log('this.listUserIdSelected', this.listUserIdSelected);
-    if (this.listUserIdSelected.length < 3) {
+    if (this.listUserIdSelected.length < 2) {
       console.log('this.listUserIdSelected', this.listUserIdSelected);
-      this.notifierService.warning('Please select at least 3 members', 'Warning');
+      this.notifierService.warning('Please select at least 2 members', 'Warning');
       return;
     } else {
       const conversation = new ConversationCreateModel()

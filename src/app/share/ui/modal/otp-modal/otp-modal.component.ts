@@ -9,6 +9,7 @@ import { UserModel } from 'src/app/share/models/user.model';
 import { AccountModel } from 'src/app/share/models/account.model';
 import { TokenModel } from 'src/app/share/models/token.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NotifierService } from 'src/app/share/services/notify/notifier.service';
 
 @Component({
   selector: 'app-otp-modal',
@@ -23,7 +24,8 @@ export class OtpModalComponent implements OnInit {
               private tokenStorageService: TokenStorageService,
               private userSerivce: UserService,
               private router: Router,
-              private modal: NgbActiveModal) { }
+              private modal: NgbActiveModal,
+              private notifierService: NotifierService) { }
 
   ngOnInit(): void {
     console.log(this.user);
@@ -98,7 +100,7 @@ export class OtpModalComponent implements OnInit {
                     const token = this.tokenStorageService.getToken();
                     const user = this.tokenStorageService.getUser();
                     if (token && user) {
-                      this.router.navigate(['/home/chat']);
+                      this.router.navigate(['/welcome']);
                     }
                   })
                 ).subscribe(me => {
@@ -106,6 +108,7 @@ export class OtpModalComponent implements OnInit {
                 });
             })
           ).subscribe(() => {
+            this.notifierService.success('Register successfully', 'Success');
             this.modal.close();
           });
         } else {
