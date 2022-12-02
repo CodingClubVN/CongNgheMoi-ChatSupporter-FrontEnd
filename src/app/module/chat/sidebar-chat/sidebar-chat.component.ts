@@ -71,7 +71,9 @@ export class SidebarChatComponent implements OnInit, OnChanges, AfterViewChecked
   }
   openModalAddMember($event: any): void {
     const modalRef = this.modalService.open(AddMemberModalComponent, {
-      size: 'lg'
+      size: 'lg',
+      backdrop: 'static',
+      keyboard : false
     })
     modalRef.componentInstance.listFriend = this.listFriend;
     modalRef.componentInstance.action = 'create-conversation';

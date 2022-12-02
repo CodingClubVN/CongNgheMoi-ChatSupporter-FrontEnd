@@ -6,6 +6,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConversationModel } from '../../models/conversation.model';
 import { AddMemberModalComponent } from '../modal/add-member-modal/add-member-modal.component';
 import { ConversationService } from '../../services/conversition/conversation.service';
+import { NotifierService } from '../../services/notify/notifier.service';
 
 @Component({
   selector: 'app-option-chat',
@@ -24,7 +25,8 @@ export class OptionChatComponent implements OnInit {
   constructor(private modalService: NgbModal,
     private conversationService: ConversationService,
     private conversationState: ConversationState,
-    private tokenStorageService: TokenStorageService) { }
+    private tokenStorageService: TokenStorageService,
+    private notifierService: NotifierService) { }
 
   ngOnInit(): void {
     this.conversationState.$conversation.subscribe((conversation: any) => {
@@ -62,6 +64,8 @@ export class OptionChatComponent implements OnInit {
   removeMember(user: any) {
     this.conversationService.removeMenberFromConversation(this.conversation._id, user._id).subscribe(() => {
       this.reloadData(this.conversation._id);
+    }, err => {
+      this.notifierService.warning('Can not remove member !', 'Warning');
     })
   }
 

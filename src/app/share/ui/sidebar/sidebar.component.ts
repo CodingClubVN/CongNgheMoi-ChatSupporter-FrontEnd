@@ -39,7 +39,7 @@ export class SidebarComponent implements OnInit{
   }
   openModalProfile(event: any): void {
     const modalRef = this.modalService.open(ProfileModalComponent, {
-      size: 'md'
+      size: 'md',
     })
     modalRef.componentInstance.action = 'my-profile';
     modalRef.componentInstance.user = this.me;

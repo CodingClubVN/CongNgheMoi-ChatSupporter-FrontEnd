@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserModel } from 'src/app/share/models/user.model';
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NotifierService } from 'src/app/share/services/notify/notifier.service';
 
 @Component({
   selector: 'app-add-member-modal',
@@ -17,8 +18,9 @@ export class AddMemberModalComponent implements OnInit, OnChanges {
   listUserIdSelected: string[] = [];
   formConversation = this.initForm();
   users!: any;
-  constructor(private modal: NgbActiveModal) { }
-  ngOnChanges(changes: SimpleChanges): void {}
+  constructor(private modal: NgbActiveModal,
+    private notifierService: NotifierService) { }
+  ngOnChanges(changes: SimpleChanges): void { }
 
   ngOnInit(): void {
     this.users = this.listFriend;
@@ -47,10 +49,17 @@ export class AddMemberModalComponent implements OnInit, OnChanges {
   }
 
   onSubmit(event: any) {
-    const conversation = new ConversationCreateModel()
-    conversation.conversationName = this.formConversation.value.conversationName ? this.formConversation.value.conversationName : 'Group no name';
-    conversation.arrayUserId = this.listUserIdSelected;
-    this.modal.close(conversation);
+    console.log('this.listUserIdSelected', this.listUserIdSelected);
+    if (this.listUserIdSelected.length < 3) {
+      console.log('this.listUserIdSelected', this.listUserIdSelected);
+      this.notifierService.warning('Please select at least 3 members', 'Warning');
+      return;
+    } else {
+      const conversation = new ConversationCreateModel()
+      conversation.conversationName = this.formConversation.value.conversationName ? this.formConversation.value.conversationName : 'Group no name';
+      conversation.arrayUserId = this.listUserIdSelected;
+      this.modal.close(conversation);
+    }
   }
   close(event: any): void {
     this.modal.close();

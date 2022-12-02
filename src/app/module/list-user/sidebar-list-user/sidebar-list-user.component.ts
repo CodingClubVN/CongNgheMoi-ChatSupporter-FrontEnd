@@ -25,9 +25,10 @@ export class SidebarListUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.socketIoService.sendReqestFriend().subscribe((res: any) => {
-      this.listRequestFriends.unshift(res);
+      this.listenService();
     });
     this.socketIoService.acceptFriend().subscribe((res: any) => {
+      this.listenService();
       this.listRequestFriends = this.listRequestFriends.filter((item: any) => item.fromUser._id !== res._id);
     });
   }

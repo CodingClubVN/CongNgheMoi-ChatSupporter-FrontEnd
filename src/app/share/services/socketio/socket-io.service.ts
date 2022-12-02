@@ -92,7 +92,7 @@ export class SocketIoService {
 
   sendReqestFriend(): Observable<any>{
     return new Observable<any>(observer => {
-      this.socket.on('send-friend-request', (data) => {
+      this.socket.on('update-friend-request', (data) => {
         observer.next(data);
       });
 
@@ -104,7 +104,7 @@ export class SocketIoService {
 
   acceptFriend(): Observable<any>{
     return new Observable<any>(observer => {
-      this.socket.on('approved-friend', (data) => {
+      this.socket.on('update-friend', (data) => {
         observer.next(data);
       });
 

@@ -56,7 +56,11 @@ export class ContentChatComponent implements OnInit, AfterViewChecked, AfterView
   }
 
   callVideo(event: any) {
-    this.modalService.open(CallVideoModalComponent, { size: 'xl' });
+    this.modalService.open(CallVideoModalComponent, {
+      size: 'xl',
+      backdrop: 'static',
+      keyboard: false
+    });
   }
   ngOnInit(): void {
     this.curentUser = this.tokenStorageService.getUser();
