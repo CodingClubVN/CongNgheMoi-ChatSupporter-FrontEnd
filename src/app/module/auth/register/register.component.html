@@ -17,30 +17,42 @@
                     </div>
                     <div class="form-outline mb-4">
                         <input type="text" id="form1Example13" class="form-control form-control-lg border-1 border-dark" formControlName="username"
-                            placeholder="Enter your username" />
+                            placeholder="Enter your username" 
+                            [class.is-invalid]="isControlInvalid(formRegister, 'username')"
+                            [class.is-valid]="isControlValid(formRegister, 'username')"/>
                     </div>
                     <div class="form-outline mb-4">
                         <input type="email" id="form1Example13" class="form-control form-control-lg border-1 border-dark" formControlName="email"
-                            placeholder="Email" />
+                            placeholder="Email" 
+                            [class.is-invalid]="isControlInvalid(formRegister, 'email')"
+                            [class.is-valid]="isControlValid(formRegister, 'email')"/>
                     </div>
                     <div class="form-outline mb-4">
                         <input type="text" id="form1Example13" class="form-control form-control-lg border-1 border-dark" formControlName="fullname"
-                            placeholder="Fullname" />
+                            placeholder="Fullname" 
+                            [class.is-invalid]="isControlInvalid(formRegister, 'fullname')"
+                            [class.is-valid]="isControlValid(formRegister, 'fullname')"/>
                     </div>
 
                     <div class="form-outline mb-4">
                         <input type="text" id="form1Example13" class="form-control form-control-lg border-1 border-dark" formControlName="phone"
-                            placeholder="Phone" />
+                            placeholder="Phone" 
+                            [class.is-invalid]="isControlInvalid(formRegister, 'phone')"
+                            [class.is-valid]="isControlValid(formRegister, 'phone')"/>
                     </div>
 
                     <div class="form-outline mb-4">
                         <input type="password" id="form1Example23" class="form-control form-control-lg border-1 border-dark" formControlName="password"
-                            placeholder="Password" />
+                            placeholder="Password" 
+                            [class.is-invalid]="isControlInvalid(formRegister, 'password')"
+                            [class.is-valid]="isControlValid(formRegister, 'password')"/>
                     </div>
 
                     <div class="form-outline mb-4">
                         <input type="password" id="form1Example23" class="form-control form-control-lg border-1 border-dark" formControlName="confirmPassword"
-                            placeholder="Confirm password" />
+                            placeholder="Confirm password" 
+                            [class.is-invalid]="isControlInvalid(formRegister, 'confirmPassword')"
+                            [class.is-valid]="isControlValid(formRegister, 'confirmPassword')"/>
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-lg btn-block w-100 mt-4 py-2 fw-bold" [disabled]="formRegister.invalid">Register</button>

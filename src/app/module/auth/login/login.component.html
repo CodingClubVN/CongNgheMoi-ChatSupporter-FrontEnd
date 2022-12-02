@@ -18,13 +18,18 @@
                     <!-- Email input -->
                     <div class="form-outline mb-4">
                         <input type="text" id="form1Example13" class="form-control form-control-lg" formControlName="username"
-                            placeholder="Enter your username" />
+                            placeholder="Enter your username" 
+                            [class.is-invalid]="isControlInvalid(loginForm, 'username')"
+                            [class.is-valid]="isControlValid(loginForm, 'username')"/>
                     </div>
 
                     <!-- Password input -->
                     <div class="form-outline mb-4">
-                        <input type="password" id="form1Example23" class="form-control form-control-lg" formControlName="password"
-                            placeholder="Password" />
+                        <input type="password" id="form1Example23" 
+                            class="form-control form-control-lg" 
+                            formControlName="password"
+                            placeholder="Password" [class.is-invalid]="isControlInvalid(loginForm, 'password')"
+                            [class.is-valid]="isControlValid(loginForm, 'password')"/>
                     </div>
                     
                     <!-- Submit button -->

@@ -33,7 +33,9 @@
                         </td>
                         <td>
                             <span class="ms-2">
-                                <input type="text" class="form-control" formControlName="fullname" [readonly]="isDisabled">
+                                <input type="text" class="form-control" formControlName="fullname" [readonly]="isDisabled"
+                                [class.is-invalid]="isControlInvalid(profileForm, 'username')"
+                                [class.is-valid]="isControlValid(profileForm, 'username')">
                             </span>
                         </td>
                     </tr>
@@ -43,7 +45,9 @@
                         </td>
                         <td>
                             <span class="ms-2">
-                                <input type="text" class="form-control" formControlName="email" [readonly]="isDisabled">
+                                <input type="text" class="form-control" formControlName="email" [readonly]="isDisabled"
+                                [class.is-invalid]="isControlInvalid(profileForm, 'email')"
+                                [class.is-valid]="isControlValid(profileForm, 'email')">
                             </span>
                         </td>
                     </tr>
@@ -53,7 +57,9 @@
                         </td>
                         <td>
                             <span class="ms-2">
-                                <input type="text" class="form-control" formControlName="phone" [readonly]="isDisabled">
+                                <input type="text" class="form-control" formControlName="phone" [readonly]="isDisabled"
+                                [class.is-invalid]="isControlInvalid(profileForm, 'phone')"
+                                [class.is-valid]="isControlValid(profileForm, 'phone')">
                             </span>
                         </td>
                     </tr>
@@ -63,7 +69,9 @@
                         </td>
                         <td>
                             <span class="ms-2">
-                                <input type="text" class="form-control" formControlName="about" [readonly]="isDisabled">
+                                <input type="text" class="form-control" formControlName="about" [readonly]="isDisabled"
+                                [class.is-invalid]="isControlInvalid(profileForm, 'about')"
+                                [class.is-valid]="isControlValid(profileForm, 'about')">
                             </span>
                         </td>
                     </tr>
@@ -73,7 +81,9 @@
                         </td>
                         <td>
                             <span class="ms-2">
-                                <input type="text" class="form-control" formControlName="yearOfBirth" [readonly]="isDisabled">
+                                <input type="text" class="form-control" formControlName="yearOfBirth" [readonly]="isDisabled"
+                                [class.is-invalid]="isControlInvalid(profileForm, 'yearOfBirth')"
+                                [class.is-valid]="isControlValid(profileForm, 'yearOfBirth')">
                             </span>
                         </td>
                     </tr>
@@ -86,7 +96,7 @@
                     <i class="fa-light fa-pen-to-square"></i>
                     <span class="ms-2">Update Infomation</span>
                 </button>
-                <button class="btn btn-primary" *ngIf="!isDisabled" (click)="updateProfile($event)">
+                <button class="btn btn-primary" *ngIf="!isDisabled" (click)="updateProfile($event)" [disabled]="profileForm.invalid">
                     <span class="ms-2">Submit</span>
                 </button>
             </div>

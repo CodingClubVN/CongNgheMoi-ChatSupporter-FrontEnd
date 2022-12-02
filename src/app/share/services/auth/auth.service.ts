@@ -65,6 +65,17 @@ export class AuthService {
       );
   }
 
+  validateEmail(email: string, phone: string, username: string): Observable<any> {
+    const url = `${apiUrl}/${path.validateEmail}`;
+    return this.apiService.postNoHeader(url, {email, phone, username})
+      .pipe(
+        map((httpResponse: HttpResponse<any>) => {
+          const body = httpResponse.body;
+          return body;
+        }
+      ));
+  }
+
   checkLogin(): boolean {
     return this.tokenStorageService.getToken() ? true : false;
   }

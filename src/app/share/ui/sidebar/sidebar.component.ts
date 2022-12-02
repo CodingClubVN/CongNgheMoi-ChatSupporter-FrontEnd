@@ -6,6 +6,7 @@ import { TokenStorageService } from './../../services/token-storage/token-storag
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import * as _ from 'lodash';
 import { ProfileModalComponent } from '../modal/profile-modal/profile-modal.component';
+import { NotifierService } from '../../services/notify/notifier.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,7 +19,8 @@ export class SidebarComponent implements OnInit{
   constructor(private tokenStorageService: TokenStorageService,
     private router: Router,
     private modalService: NgbModal,
-    private userService: UserService) { }
+    private userService: UserService,
+    private notifierService: NotifierService) { }
 
   ngOnInit(): void {
     this.me = this.tokenStorageService.getUser();
@@ -52,8 +54,12 @@ export class SidebarComponent implements OnInit{
       formdata.append('yearOrBirth', result.form.yearOfBirth);
 
       this.userService.updateUser(this.me?._id, formdata).subscribe((res: any) => {
+        this.notifierService.success('Update profile successfuly !', 'Success');
         this.me = res;
         this.tokenStorageService.addUser(this.me);
+      },
+      err => {
+        this.notifierService.error('Update profile failed !', 'Error');
       });
     })
   }

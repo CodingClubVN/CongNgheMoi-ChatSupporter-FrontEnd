@@ -13,6 +13,7 @@ export const apiPath = {
     changePassword: 'api/auth/changePassword',
     sendOTP: 'api/auth/send-otp',
     verifyOTP: 'api/auth/validate-otp',
+    validateEmail: 'api/auth/validate-email',
   },
   order: {
     order: 'api/orders',

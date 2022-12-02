@@ -9,6 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/share/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NotifierService } from 'src/app/share/services/notify/notifier.service';
 
 @Component({
   selector: 'app-login',
@@ -21,28 +22,27 @@ export class LoginComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     private router: Router,
     private userSerivce: UserService,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+    private notifierService: NotifierService) { }
 
   ngOnInit(): void {
   }
   initFormLogin(): FormGroup {
     return new FormGroup({
-      username: new FormControl('thaihoc1', [Validators.required, Validators.minLength(6)]),
-      password: new FormControl('123123123', [Validators.required, Validators.minLength(6)])
+      username: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)])
     });
   }
   login(): void {
     const account = new AccountModel();
     account.username = this.loginForm.getRawValue().username;
     account.password = this.loginForm.getRawValue().password;
-    // this.modalService.open(OtpModalComponent, {
-    //   size: 'lg'
-    // })
     this.authService.login(account).subscribe((data: TokenModel) => {
       this.tokenStorageService.saveToken(data.token);
       this.loginForm.reset();
       this.userSerivce.getMe().pipe(
         finalize(() => {
+          this.notifierService.success('Login success !', 'Suscess');
           const token = this.tokenStorageService.getToken();
           const user = this.tokenStorageService.getUser();
           if (token && user) {
@@ -54,8 +54,29 @@ export class LoginComponent implements OnInit {
       });
     },
       error => {
+        this.notifierService.error('Username or password is incorrect', 'Login failed');
         console.log(error);
       }
     );
+  }
+
+  isControlValid(formGroup: FormGroup, controlName: string): boolean {
+    const control = formGroup.controls[controlName];
+    return control.valid && (control.dirty || control.touched);
+  }
+
+  isControlInvalid(formGroup: FormGroup, controlName: string): boolean {
+    const control = formGroup.controls[controlName];
+    return control.invalid && (control.dirty || control.touched);
+  }
+
+  controlHasError(formGroup: FormGroup, validation: any, controlName: any): boolean {
+    const control = formGroup.controls[controlName];
+    return control.hasError(validation) && (control.dirty || control.touched);
+  }
+
+  isControlTouched(formGroup: FormGroup, controlName: any): boolean {
+    const control = formGroup.controls[controlName];
+    return control.dirty || control.touched;
   }
 }

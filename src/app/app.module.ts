@@ -10,6 +10,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {LocalStorageService, NgxWebstorageModule, StrategyCacheService, StrategyIndex} from 'ngx-webstorage';
 import { CookieService } from 'ngx-cookie-service';
 import { ModalModule } from 'ngb-modal';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { ModalModule } from 'ngb-modal';
     HttpClientModule,
     NgxWebstorageModule.forRoot({ prefix: 'custom', separator: '.', caseSensitive:true }),
     UiModule,
-    ModalModule
+    ModalModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [
     TokenStorageService, 
