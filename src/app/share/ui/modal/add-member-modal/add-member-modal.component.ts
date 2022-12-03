@@ -26,8 +26,8 @@ export class AddMemberModalComponent implements OnInit, OnChanges {
     this.users = this.listFriend;
     console.log('this.listFriend', this.listFriend);
     if (this.action === 'add-member') {
-      console.log('this.conversation', this.conversation);
-      this.listFriend = this.listFriend.filter(user => !this.conversation?.users.some((member: any) => member._id === user._id));
+      console.log('this.conversation', this.listFriend);
+      this.listFriend = this.listFriend.filter(user => !this.conversation?.users.some((member: any) => member._id === user?.friend?._id));
     }
   }
 
@@ -53,7 +53,7 @@ export class AddMemberModalComponent implements OnInit, OnChanges {
 
   onSubmit(event: any) {
     console.log('this.listUserIdSelected', this.listUserIdSelected);
-    if (this.listUserIdSelected.length < 2) {
+    if (this.listUserIdSelected.length < 2 || this.conversation?.users.length > 2) {
       console.log('this.listUserIdSelected', this.listUserIdSelected);
       this.notifierService.warning('Please select at least 2 members', 'Warning');
       return;

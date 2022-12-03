@@ -34,6 +34,7 @@ export const apiPath = {
     request: 'api/friends/request',
     approve: 'api/friends/request/approve',
     reject: 'api/friends/request/reject',
-    friends: 'api/friends'
+    friends: 'api/friends',
+    unfriend: 'api/friends/unfriend'
   }
 }

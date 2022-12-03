@@ -8,6 +8,7 @@ import { UserModel } from 'src/app/share/models/user.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ListUserComponent } from '../list-user.component';
+import { ConfirmDiglogComponent } from 'src/app/share/ui/modal/confirm-diglog/confirm-diglog.component';
 
 @Component({
   selector: 'app-sidebar-list-user',
@@ -66,5 +67,24 @@ export class SidebarListUserComponent implements OnInit {
       this.listenService();
     });
     console.log('reject', user);
+  }
+
+  unFriend(user: any, event: any): void {
+    event.stopPropagation();
+    event.preventDefault();
+    console.log('unFriend', user);
+
+    const modalRef = this.modalService.open(ConfirmDiglogComponent);
+    modalRef.componentInstance.title = 'Unfriend';
+    modalRef.componentInstance.message = `Do you want to unfriend ${user?.friend?.account?.username} ?`;
+    modalRef.result.then((result) => {
+      if (!result) {
+        return;
+      }
+      this.friendService.unFriend(user?.friend?._id).subscribe((res: any) => {
+        this.listenService();
+      });
+    })
+
   }
 }

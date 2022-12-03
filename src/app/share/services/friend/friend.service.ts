@@ -73,4 +73,14 @@ export class FriendService {
       })
     );
   }
+
+  unFriend(friendId: string): Observable<any> {
+    const url = `${apiUrl}/${path.unfriend}`;
+    return this.apiSerivce.post(url, {friendId}).pipe(
+      map((httpResponse: HttpResponse<any>) => {
+        const body = httpResponse.body;
+        return body;
+      })
+    );
+  }
 }

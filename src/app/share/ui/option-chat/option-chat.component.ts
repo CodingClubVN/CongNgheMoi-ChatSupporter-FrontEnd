@@ -7,6 +7,7 @@ import { ConversationModel } from '../../models/conversation.model';
 import { AddMemberModalComponent } from '../modal/add-member-modal/add-member-modal.component';
 import { ConversationService } from '../../services/conversition/conversation.service';
 import { NotifierService } from '../../services/notify/notifier.service';
+import { ConfirmDiglogComponent } from '../modal/confirm-diglog/confirm-diglog.component';
 
 @Component({
   selector: 'app-option-chat',
@@ -62,10 +63,18 @@ export class OptionChatComponent implements OnInit {
     })
   }
   removeMember(user: any) {
-    this.conversationService.removeMenberFromConversation(this.conversation._id, user._id).subscribe(() => {
-      this.reloadData(this.conversation._id);
-    }, err => {
-      this.notifierService.warning('Can not remove member !', 'Warning');
+    const modalRef = this.modalService.open(ConfirmDiglogComponent);
+    modalRef.componentInstance.title = 'Remove member';
+    modalRef.componentInstance.message = `Do you want remove ${user?.friend?.account?.username} from this conversation ?`;
+    modalRef.result.then((result) => {
+      if (!result) {
+        return;
+      }
+      this.conversationService.removeMenberFromConversation(this.conversation._id, user._id).subscribe(() => {
+        this.reloadData(this.conversation._id);
+      }, err => {
+        this.notifierService.warning('Can not remove member !', 'Warning');
+      })
     })
   }
 
